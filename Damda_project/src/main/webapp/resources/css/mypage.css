@@ -1,0 +1,182 @@
+@charset "UTF-8";
+
+        #content .width_div {
+            width: 100%;
+            height: 250px;
+            background-color: whitesmoke;
+        }
+
+        #content #content_header {
+        	z-index:2;
+            background-color: whitesmoke;
+            padding-bottom: 50px;
+            padding-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        #content #content_header>div {
+            background-color: white;
+            margin: 10px;
+            height: 130px;
+            color: gray;
+        }
+
+
+        #content #content_header #grade_div {
+            border: 1px solid darksalmon;
+            border-radius: 5px;
+            width: 70px;
+            height: 65px;
+            line-height: 65px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: darksalmon;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        #content #content_header>div:nth-child(1) strong {
+            position: relative;
+            top: -15px;
+            left: 0px;
+            margin-left: 20px;
+        }
+
+        #content #content_header>div:nth-child(1) small {
+            font-size: 13px;
+            color: gray;
+            position: relative;
+            top: -15px;
+            left: 0px;
+            margin-left: 5px;
+        }
+
+        #content #content_header>div:nth-child(1) p {
+            display: inline-block;
+            position: relative;
+            left: -70px;
+            top: 12px;
+        }
+
+        #content #content_header #btn_div {
+            width: 140px;
+            display: inline-block;
+            float: right;
+            position: relative;
+            top: 25px;
+        }
+
+        #content #content_header>div button {
+            border: 0px;
+            border-radius: 50px;
+            background-color: #eeeeee;
+            margin: 5px;
+            font-size: 12px;
+        }
+
+        #content #content_header>div button:hover {
+            background-color: darksalmon;
+            color: white;
+        }
+
+        #content #content_header div img {
+            position: relative;
+            top: 17px;
+            left: 12px;
+            width: 15px;
+        }
+
+        #content #content_header p {
+            font-size: 13px;
+            color: gray;
+            position: relative;
+            top: 20px;
+            left: 10px;
+
+        }
+
+        #content #content_header strong {
+            color: darksalmon;
+            font-size: 18px;
+            position: relative;
+            left: 10px;
+            top: 20px;
+
+        }
+
+        #content #content_header small {
+            color: #cecece;
+            position: relative;
+            top: 25px;
+            left: 10px;
+        }
+
+        #content #content_header a,
+        #content #content_header a:hover {
+            text-decoration: none;
+        }
+
+
+
+        /*aside menu***********************************/
+        #content #content_aside {
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        #content #content_aside img {
+            width: 12px;
+            float: right;
+            position: relative;
+            top: -40px;
+            left: -10px;
+        }
+
+        #content #content_aside ul {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #content #content_aside ul li {
+            border: 1px solid #cccccc;
+            height: 50px;
+            line-height: 50px;
+            float: left;
+        }
+
+        #content #content_aside ul li:hover {
+            background-color: #FBF5EF;
+        }
+
+        #content #content_aside ul li:nth-child(1),
+        #content #content_aside ul li:nth-child(2),
+        #content #content_aside ul li:nth-child(3),
+        #content #content_aside ul li:nth-child(4) {
+            border-bottom: 0px;
+        }
+
+        #content #content_aside ul li p {
+            margin-left: 30px;
+        }
+
+        #content #content_aside ul li a {
+            text-decoration: none;
+            color: #565656;
+        }
+
+        #content #content_aside ul li a:hover {
+            color: darksalmon;
+            font-weight: bold;
+        }
+
+        #content #content_aside h2 {
+            width: 150px;
+        }
+
+        #content #content_aside .active_menu {
+            background-color: #FBF5EF;
+            color: darksalmon;
+            font-weight: bold;
+        }

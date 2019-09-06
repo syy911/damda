@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.bit.pro.mappers.eventMapper">
+ 
+ <select id="selectEventAll" resultType="com.bit.pro.vo.EventVo">
+ 	SELECT * FROM EVENT ORDER BY EVENTNUM DESC;
+ </select>
+ <insert id="insertEvent" parameterType="com.bit.pro.vo.EventVo">
+ 	INSERT INTO EVENT (EVENTSUB, EVENTDATESTA, EVENTDATEEND, EVENTCONTENT) VALUES (#{eventsub},#{eventdateSta},#{eventdateEnd},#{eventcontent})
+ </insert>
+ <select id="selectEventOne" parameterType="java.lang.Integer" resultType="com.bit.pro.vo.EventVo">
+  	SELECT * FROM EVENT WHERE EVENTNUM=#{eventnum}
+  </select>
+ <update id="updateEvent" parameterType="com.bit.pro.vo.EventVo">
+ 	UPDATE EVENT SET EVENTSUB=#{eventsub}, EVENTDATESTA=#{eventdateSta}, EVENTDATEEND=#{eventdateEnd},EVENTCONTENT=#{eventcontent} WHERE EVENTNUM=#{eventnum}  
+ </update>
+ <delete id="deleteEvent" parameterType="int">
+ 	DELETE FROM EVENT WHERE EVENTNUM=#{eventnum}
+ </delete>
+ <!-- 사진 -->
+
+</mapper>

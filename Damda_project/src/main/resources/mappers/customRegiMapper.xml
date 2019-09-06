@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.bit.pro.mappers.customRegiMapper">
+ <select id="selectMateAll" resultType="com.bit.pro.vo.MateVo">
+ 	SELECT * FROM MATERIAL ORDER BY MATENUM DESC LIMIT #{startList}, #{listSize}
+ 	<!-- 페이징을 위한 명령어 LIMT 첫번째row위치, 읽어올갯수 -->
+ </select>
+ <select id="selectMateAllCnt" resultType="int">
+ 	SELECT COUNT(*) AS LISTCOUNT FROM MATERIAL
+ </select>
+ <insert id="insertMate" parameterType="com.bit.pro.vo.MateVo">
+ 	INSERT INTO MATERIAL (MATENAME, MATEPRICE, MATECTG, SALESTATUS) VALUES (#{mateName},#{mateprice},#{matectg},#{salestatus})
+ </insert>
+ <select id="selectMateOne" parameterType="int" resultType="com.bit.pro.vo.MateVo">
+  	SELECT * FROM MATERIAL WHERE MATENUM=#{matenum}
+  </select>
+ <!-- 사진 -->
+ <select id="selectMatePhoto" parameterType="int" resultType="com.bit.pro.vo.MateVo">
+ 	SELECT PHOTOPATH FROM PHOTO JOIN MATERIAL ON P_MATENUM=MATENUM
+ </select>
+ <update id="updateMate" parameterType="com.bit.pro.vo.MateVo">
+ 	UPDATE MATERIAL SET MATENAME=#{mateName}, MATEPRICE=#{mateprice}, MATECTG=#{matectg},SALESTATUS=#{salestatus} WHERE MATENUM=#{matenum}  
+ </update>
+ 
+ <delete id="deleteMate" parameterType="int">
+ 	DELETE FROM MATERIAL WHERE MATENUM=#{matenum}
+ </delete>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit.pro.mappers.photoMapper"> 
+ <insert id="insertPhoto" parameterType="photoVo">
+  <selectKey keyProperty="p_itemNum" resultType="int" order="BEFORE">
+       SELECT max(itemNum) AS p_itemNum FROM allitem
+   </selectKey>
+ 	 INSERT INTO PHOTO (photoctg,photoctg2, photopath, photoname, originalname,p_itemnum)
+     VALUES (#{photoCtg},#{photoCtg2},#{photoPath}, #{photoName}, #{originalName},#{p_itemNum})
+<!--   외래키 p_itemnum current_val로 받아와야해 allitem 먼저 들어가면서 시퀀스 생성해주는걸로 받아오기 --> 	
+ </insert>
+  
+
+    
+</mapper>
