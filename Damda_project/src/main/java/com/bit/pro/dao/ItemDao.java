@@ -30,4 +30,7 @@ public interface ItemDao {
 
 	List<AllItemVo> alignExpen(HashMap<String, Object> map) throws Exception;
 	
+	//item-insert
+	int insertItem(AllItemVo allitemVo) throws Exception; 
+	
 }

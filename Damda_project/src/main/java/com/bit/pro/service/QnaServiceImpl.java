@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.bit.pro.dao.QnaDao;
@@ -18,11 +19,10 @@ public class QnaServiceImpl implements QnaService {
 
 	@Resource(name="qnaDao")
 	private QnaDao qnaDao;
-
+	
 	@Override
-	public List<QnaVo> selectQna() throws Exception {
-		logger.debug("Ãâ·Â: "+qnaDao.selectQna());
-		return qnaDao.selectQna();
+	public List<QnaVo> selectQnaList() throws Exception {
+		return  qnaDao.selectQnaList();
 	}
 
 	@Override

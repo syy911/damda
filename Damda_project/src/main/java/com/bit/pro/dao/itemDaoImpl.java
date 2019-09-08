@@ -72,6 +72,10 @@ public class itemDaoImpl implements ItemDao {
 	public List<AllItemVo> alignExpen(HashMap<String, Object> map) throws Exception {
 		return sqlSession.selectList(NAMESPACE +".alignExpen", map);
 	}
-
+	//item-insert
+	@Override 
+	public int insertItem(AllItemVo allitemVo) throws Exception {
+		return sqlSession.insert(NAMESPACE + ".insertAllitem",allitemVo);
+	}
 
 }

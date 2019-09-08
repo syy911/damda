@@ -1,35 +1,27 @@
 package com.bit.pro.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.bit.pro.service.ItemService;
-import com.bit.pro.service.QnaService;
 import com.bit.pro.service.ReviewService;
 import com.bit.pro.vo.AllItemVo;
-import com.bit.pro.vo.QnaVo;
 import com.bit.pro.vo.ReviewVo;
 
 @Controller
 @RequestMapping("/item")
 public class ItemController {
-	
+	 
 	String dir = "item";
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	
@@ -42,7 +34,7 @@ public class ItemController {
 	private int row = 30;
 
 	@RequestMapping(value = "/salad", method = RequestMethod.GET)
-	public String salad(Locale locale, Model model, @RequestParam(value="p", defaultValue = "0") int p, HttpServletRequest req) throws Exception {
+	public String salad(Model model, @RequestParam(value="p", defaultValue = "0") int p, HttpServletRequest req) throws Exception {
 		item_ctg(1, p, model);
 		return dir+"/main";
 	}
@@ -72,16 +64,32 @@ public class ItemController {
         int startpoint = p * row;
         map.put("startpoint", startpoint);
         map.put("row", row);
-        
+//////////////////////////////////////////////////////////////////////////////////////°æ¹Î    
         List<AllItemVo> list = itemService.selectItem(map);
-        
+        String photoPart = "";
+        AllItemVo newallitemVo =null;
+        List<AllItemVo> newList = new ArrayList<AllItemVo>();    
+        	for(AllItemVo allitemVo : list) {
+        		newallitemVo  = allitemVo;  
+        		int photoCtg = newallitemVo.getPhotoCtg();
+        		if(photoCtg==1) {
+        			photoPart = "salad";
+                }else if(photoCtg==2) {
+                	photoPart = "dessert";
+                }else if(photoCtg==3) {
+                	photoPart = "beverage"; 
+                }
+        		allitemVo.setCtgToadd(photoPart);
+        		newList.add(allitemVo);
+          }
+//////////////////////////////////////////////////////////////////////////////////////°æ¹Î          
 		model.addAttribute("p", p);
 		model.addAttribute("totalpage",totalpage);
-		model.addAttribute("List", list);
+		model.addAttribute("List", newList);
 	}
 	
 	
-	//select box start////////////////////////////////////////////////////////////////////////////////////////////////////
+//select box start////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/salad", method = RequestMethod.POST)
 	public String salad(Model model, @RequestParam("select") String select, @RequestParam(value="p", defaultValue = "0") int p) throws Exception {
 		System.out.println("select: "+select);
@@ -166,17 +174,3 @@ public class ItemController {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

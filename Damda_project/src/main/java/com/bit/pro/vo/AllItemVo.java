@@ -9,10 +9,11 @@ public class AllItemVo {
 	private int itemNum;
 	private int itemStock;
 	private int itemSales;
-	
+	private String ctgToadd;
 	//photo table
 	private int photoNum;
 	private int photoCtg;
+
 	private String photoCtg2;
 	private String photoPath;
 	private String photoName;
@@ -27,7 +28,7 @@ public class AllItemVo {
 	public AllItemVo() {}
 
 	public AllItemVo(int category, int itemPrice, String itemName, String itemCon, int itemNum, int itemStock,
-			int itemSales, int photoNum, int photoCtg, String photoCtg2, String photoPath, String photoName,
+			int itemSales,String ctgToadd, int photoNum, int photoCtg, String photoCtg2, String photoPath, String photoName,
 			String originalName, int p_itemNum, int p_ingredientNum, int p_reviewNum, int p_eventNum, int p_noticeNum,
 			int p_qnaNum) {
 		super();
@@ -38,6 +39,7 @@ public class AllItemVo {
 		this.itemNum = itemNum;
 		this.itemStock = itemStock;
 		this.itemSales = itemSales;
+		this.ctgToadd = ctgToadd;
 		this.photoNum = photoNum;
 		this.photoCtg = photoCtg;
 		this.photoCtg2 = photoCtg2;
@@ -108,6 +110,13 @@ public class AllItemVo {
 		this.itemSales = itemSales;
 	}
 
+	public String getCtgToadd() {
+		return ctgToadd;
+	}
+	
+	public void setCtgToadd(String ctgToadd) {
+		this.ctgToadd = ctgToadd;
+	}
 	public int getPhotoNum() {
 		return photoNum;
 	}
@@ -204,11 +213,14 @@ public class AllItemVo {
 		this.p_qnaNum = p_qnaNum;
 	}
 	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + category;
+		result = prime * result + ((ctgToadd == null) ? 0 : ctgToadd.hashCode());
 		result = prime * result + ((itemCon == null) ? 0 : itemCon.hashCode());
 		result = prime * result + ((itemName == null) ? 0 : itemName.hashCode());
 		result = prime * result + itemNum;
@@ -240,6 +252,11 @@ public class AllItemVo {
 			return false;
 		AllItemVo other = (AllItemVo) obj;
 		if (category != other.category)
+			return false;
+		if (ctgToadd == null) {
+			if (other.ctgToadd != null)
+				return false;
+		} else if (!ctgToadd.equals(other.ctgToadd))
 			return false;
 		if (itemCon == null) {
 			if (other.itemCon != null)
@@ -302,10 +319,10 @@ public class AllItemVo {
 	public String toString() {
 		return "AllItemVo [category=" + category + ", itemPrice=" + itemPrice + ", itemName=" + itemName + ", itemCon="
 				+ itemCon + ", itemNum=" + itemNum + ", itemStock=" + itemStock + ", itemSales=" + itemSales
-				+ ", photoNum=" + photoNum + ", photoCtg=" + photoCtg + ", photoCtg2=" + photoCtg2 + ", photoPath="
-				+ photoPath + ", photoName=" + photoName + ", originalName=" + originalName + ", p_itemNum=" + p_itemNum
-				+ ", p_ingredientNum=" + p_ingredientNum + ", p_reviewNum=" + p_reviewNum + ", p_eventNum=" + p_eventNum
-				+ ", p_noticeNum=" + p_noticeNum + ", p_qnaNum=" + p_qnaNum + "]";
+				+ ", ctgToadd=" + ctgToadd + ", photoNum=" + photoNum + ", photoCtg=" + photoCtg + ", photoCtg2="
+				+ photoCtg2 + ", photoPath=" + photoPath + ", photoName=" + photoName + ", originalName=" + originalName
+				+ ", p_itemNum=" + p_itemNum + ", p_ingredientNum=" + p_ingredientNum + ", p_reviewNum=" + p_reviewNum
+				+ ", p_eventNum=" + p_eventNum + ", p_noticeNum=" + p_noticeNum + ", p_qnaNum=" + p_qnaNum + "]";
 	}
 	
 }

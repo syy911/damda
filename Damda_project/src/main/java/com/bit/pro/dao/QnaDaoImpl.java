@@ -18,8 +18,8 @@ public class QnaDaoImpl implements QnaDao {
 	private static final String NAMESPACE = "com.bit.pro.mappers.qnaMapper";
 	
 	@Override
-	public List<QnaVo> selectQna() throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".selectQna");
+	public List<QnaVo> selectQnaList() throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".selectQnaList");
 	}
 
 	@Override
