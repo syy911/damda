@@ -3,32 +3,25 @@ package com.bit.pro.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import com.bit.pro.vo.AllItemVo;
 
 public interface ItemService {
 	
 	//Home
-	List<AllItemVo> selectHome(HashMap<String, Object> map) throws Exception;
+	Model selectHome(Model model) throws Exception;
 		
 	//main
-	List<AllItemVo> selectItem(HashMap<String, Object> map) throws Exception;
-	int totalCount(HashMap<String, Object> map);
+	Model selectItem(int num, int p, String select, Model model) throws Exception;
 	
 	//best
-	List<AllItemVo> selectBest(HashMap<String, Object> map) throws Exception;
+	Model selectBest(int startPoint, int row, Model model) throws Exception;
 
 	//detail
-	AllItemVo selectOne(HashMap<String, Object> map) throws Exception;
-	String selectOne_detailImg(HashMap<String, Object> map) throws Exception;
+	Model selectOne(int no, Model model) throws Exception;
+	Model selectOne_detailImg(int no, Model model) throws Exception;
 
-	//align
-	List<AllItemVo> alignNew(HashMap<String, Object> map) throws Exception;
-
-	List<AllItemVo> alignBest(HashMap<String, Object> map) throws Exception;
-
-	List<AllItemVo> alignCheap(HashMap<String, Object> map) throws Exception;
-
-	List<AllItemVo> alignExpen(HashMap<String, Object> map) throws Exception;
 	
 	
 }

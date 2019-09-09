@@ -58,6 +58,7 @@ public class LoginController {
 			session.setAttribute("userid", id);
 			session.setAttribute("username", map.get("username"));
 			session.setAttribute("user_ctg", (int)map.get("category"));
+			session.setAttribute("userNum", (int)map.get("usernum"));
 			System.out.println("user_ctg: " + map.get("category"));
 			mav.setViewName("redirect:/");
 		}else{				//로그인실패시 로그인페이지로 이동

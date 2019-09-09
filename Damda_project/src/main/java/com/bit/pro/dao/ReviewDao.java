@@ -7,7 +7,7 @@ import com.bit.pro.vo.ReviewVo;
 
 public interface ReviewDao {
 	
-	List<ReviewVo> selectList(HashMap<String, Object> map) throws Exception;
-	int reviewCount(HashMap<String, Object> map);
+	List<ReviewVo> selectList(ReviewVo bean) throws Exception;
+	int reviewCount(ReviewVo bean);
 
 }

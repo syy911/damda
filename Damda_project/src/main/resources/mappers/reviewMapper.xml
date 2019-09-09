@@ -5,11 +5,11 @@
 <mapper namespace="com.bit.pro.mappers.reviewMapper">
 
 <select id="selectList" parameterType="HashMap" resultType="reviewVo">
-	select * from review join userinfo on review.r_usernum = userinfo.usernum left join photo on photo.p_reviewnum = review.reviewnum  where review.r_itemnum = #{num} order by reviewnum desc limit #{startpoint}, #{row} 
+	select * from review join userinfo on review.r_usernum = userinfo.usernum left join photo on photo.p_reviewnum = review.reviewnum  where review.r_itemnum = #{r_itemNum} order by ${itemalign} limit #{startpoint}, #{row} 
 </select>
 
 <select id="reviewCount" parameterType="HashMap" resultType="int">
-	select count(*) from review where r_itemnum=#{num};
+	select count(*) from review where r_itemnum=#{r_itemNum};
 </select>
 
 </mapper>
