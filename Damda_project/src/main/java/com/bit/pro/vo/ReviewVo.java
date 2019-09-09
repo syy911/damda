@@ -42,6 +42,14 @@ public class ReviewVo {
 	private int category;
 	private int userPoint;
 	
+	//페이징
+	private int p;
+	private int startpoint;
+	private int row;
+	
+	//아이템정렬 
+	private String itemalign;
+	
 	public ReviewVo() {	}
 
 	public int getReviewNum() {
@@ -316,13 +324,48 @@ public class ReviewVo {
 		this.userPoint = userPoint;
 	}
 
+	public int getP() {
+		return p;
+	}
+
+	public void setP(int p) {
+		this.p = p;
+	}
+
+	public int getStartpoint() {
+		return startpoint;
+	}
+
+	public void setStartpoint(int startpoint) {
+		this.startpoint = startpoint;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public String getItemalign() {
+		return itemalign;
+	}
+
+	public void setItemalign(String itemalign) {
+		this.itemalign = itemalign;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + adminSelect;
 		result = prime * result + category;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((itemalign == null) ? 0 : itemalign.hashCode());
 		result = prime * result + ((originalName == null) ? 0 : originalName.hashCode());
+		result = prime * result + p;
 		result = prime * result + p_eventNum;
 		result = prime * result + p_ingredientNum;
 		result = prime * result + p_itemNum;
@@ -339,6 +382,8 @@ public class ReviewVo {
 		result = prime * result + recommend;
 		result = prime * result + ((reviewCon == null) ? 0 : reviewCon.hashCode());
 		result = prime * result + reviewNum;
+		result = prime * result + row;
+		result = prime * result + startpoint;
 		result = prime * result + ((userAcc == null) ? 0 : userAcc.hashCode());
 		result = prime * result + ((userAccowner == null) ? 0 : userAccowner.hashCode());
 		result = prime * result + ((userBank == null) ? 0 : userBank.hashCode());
@@ -369,10 +414,22 @@ public class ReviewVo {
 			return false;
 		if (category != other.category)
 			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (itemalign == null) {
+			if (other.itemalign != null)
+				return false;
+		} else if (!itemalign.equals(other.itemalign))
+			return false;
 		if (originalName == null) {
 			if (other.originalName != null)
 				return false;
 		} else if (!originalName.equals(other.originalName))
+			return false;
+		if (p != other.p)
 			return false;
 		if (p_eventNum != other.p_eventNum)
 			return false;
@@ -417,6 +474,10 @@ public class ReviewVo {
 		} else if (!reviewCon.equals(other.reviewCon))
 			return false;
 		if (reviewNum != other.reviewNum)
+			return false;
+		if (row != other.row)
+			return false;
+		if (startpoint != other.startpoint)
 			return false;
 		if (userAcc == null) {
 			if (other.userAcc != null)
@@ -488,7 +549,8 @@ public class ReviewVo {
 				+ ", useraddr=" + useraddr + ", userPostnum=" + userPostnum + ", userPhone=" + userPhone
 				+ ", userEmail=" + userEmail + ", userBuy=" + userBuy + ", userAcc=" + userAcc + ", userBank="
 				+ userBank + ", userAccowner=" + userAccowner + ", userGrade=" + userGrade + ", category=" + category
-				+ ", userPoint=" + userPoint + "]";
+				+ ", userPoint=" + userPoint + ", p=" + p + ", startpoint=" + startpoint + ", row=" + row
+				+ ", itemalign=" + itemalign + "]";
 	}
 
 	public ReviewVo(int reviewNum, int r_userNum, int r_itemNum, String reviewCon, int adminSelect, int recommend,
@@ -496,7 +558,7 @@ public class ReviewVo {
 			String originalName, int p_itemNum, int p_ingredientNum, int p_reviewNum, int p_eventNum, int p_noticeNum,
 			int p_qnaNum, int userNum, String userId, String userPW, String userName, String useraddr, int userPostnum,
 			int userPhone, String userEmail, int userBuy, String userAcc, String userBank, String userAccowner,
-			String userGrade, int category, int userPoint) {
+			String userGrade, int category, int userPoint, int p, int startpoint, int row, String itemalign) {
 		super();
 		this.reviewNum = reviewNum;
 		this.r_userNum = r_userNum;
@@ -532,7 +594,13 @@ public class ReviewVo {
 		this.userGrade = userGrade;
 		this.category = category;
 		this.userPoint = userPoint;
+		this.p = p;
+		this.startpoint = startpoint;
+		this.row = row;
+		this.itemalign = itemalign;
 	}
 
+	
+	
 	
 }

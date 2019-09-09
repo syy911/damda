@@ -327,12 +327,10 @@
 	    function price_setting() {
 	         var itemName_arr = $('.itemNum').get();
 	         var length = itemName_arr.length;
-	         console.log('요소: ' + itemName_arr, '길이: ' + length);
 	
 	         for (var i = 0; i < length; i++) {
 	             var id = itemName_arr[i].value;
 	             total_price(id);
-	             console.log(id);
 	         }
 	     }
 	
@@ -341,7 +339,6 @@
 	         var input_id = '#'+id;
 	         //input의 val값구하기
 	         var price = $(input_id).val();
-	         console.log(price);
 	
 	         //가격*수량의 문자열 길이
 	         var length = price.length;
@@ -352,7 +349,6 @@
 	         //class는 p영역
 	         var p_msg = '.' + id;
 	         $(p_msg).html(price_view);
-	         console.log(price_view);
 	     }
 	
 	     //가격뷰어

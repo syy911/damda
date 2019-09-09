@@ -5,8 +5,8 @@
 
 <mapper namespace="com.bit.pro.mappers.allitemMapper"> 
  <insert id="insertAllitem" parameterType="allitemVo">
- 	 INSERT INTO ALLITEM (category,itemprice, itemname, itemcon,itemstock)
-     VALUES (#{category},#{itemPrice},#{itemName}, #{itemCon},#{itemStock}); 
+ 	 INSERT INTO ALLITEM (itemctg,itemprice, itemname, itemcon,itemstock)
+     VALUES (#{itemCtg},#{itemPrice},#{itemName}, #{itemCon},#{itemStock}); 
  </insert>
      
 </mapper>

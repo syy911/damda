@@ -19,13 +19,13 @@ public class ReviewDaoImpl implements ReviewDao {
 	private static final String NAMESPACE = "com.bit.pro.mappers.reviewMapper";
 	
 	@Override
-	public List<ReviewVo> selectList(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".selectList", map);
+	public List<ReviewVo> selectList(ReviewVo bean) throws Exception {
+		return sqlSession.selectList(NAMESPACE +".selectList", bean);
 	}
 
 	@Override
-	public int reviewCount(HashMap<String, Object> map) {
-		return sqlSession.selectOne(NAMESPACE +".reviewCount", map);
+	public int reviewCount(ReviewVo bean) {
+		return sqlSession.selectOne(NAMESPACE +".reviewCount", bean);
 	}
 
 }

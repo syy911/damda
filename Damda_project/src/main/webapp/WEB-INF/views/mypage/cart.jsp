@@ -482,150 +482,40 @@
 		            </tr>
 		        </thead>
 		        <tbody>
+		        <c:forEach items="${List}" var="List" varStatus="status">
 		            <tr>
 		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum" />
-		                    <label for="itemnum"></label>
+		                    <input type="checkbox" name="chk" id="${List.itemNum }" />
+		                    <label for="${List.itemNum }"></label>
 		                </td>
 		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s01.jpg" class="cartimg" />
+		                    <img alt="cartimg" src="${List.photoPath }" class="cartimg" />
 		                </td>
 		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
+		                    <strong>${List.itemName }</strong>
+		                    <p>선택정보 : 수량 ${List.ea } 개</p>
 		                </td>
 		                <td class="ea_td">
 		                    <div>
-		                        <button class="minus" id="minus1" onclick="minus_click(1);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea1" value="1" readonly />
-		                        <button class="plus" id="plus1" onclick="plus_click(1);">+</button>
+		                        <button class="minus" id="minus1" onclick="minus_click(${List.itemNum });">-</button>
+		                        <input type="text" class="ea" name="ea" id="ea${List.itemNum }" value="${List.ea }" readonly />
+		                        <button class="plus" id="plus1" onclick="plus_click(${List.itemNum });">+</button>
 		                    </div>
 		                </td>
 		                <td class="price_td">
-		                    <p class="itemno1">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno1" value="6000" />
-		                    <input type="hidden" name="total_price" id="total_itemno1" value="6000" />
+		                    <p class="itemno${List.itemNum }">상품가격오는 곳******************</p>
+		                    <input type="hidden" name="origin_price" id="origin_itemno${List.itemNum }" value="${List.itemPrice }" />
+		                    <input type="hidden" name="total_price" id="total_itemno${List.itemNum }" value="6000" />
 		                </td>
 		                <td class="delete_td">
 		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
 		                </td>
 		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum2" />
-		                    <label for="itemnum2"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s02.jpg" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus2" onclick="minus_click(2);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea2" value="1" readonly />
-		                        <button class="plus" id="plus2" onclick="plus_click(2);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno2">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno2" value="7000" />
-		                    <input type="hidden" name="total_price" id="total_itemno2" value="7000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum3" />
-		                    <label for="itemnum3"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s03.jpg" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus3" onclick="minus_click(3);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea3" value="1" readonly />
-		                        <button class="plus" id="plus3" onclick="plus_click(3);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno3">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno3" value="8000" />
-		                    <input type="hidden" name="total_price" id="total_itemno3" value="8000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum4" />
-		                    <label for="itemnum4"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s04.PNG" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus4" onclick="minus_click(4);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea4" value="1" readonly />
-		                        <button class="plus" id="plus4" onclick="plus_click(4);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno4">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno4" value="9000" />
-		                    <input type="hidden" name="total_price" id="total_itemno4" value="9000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum5" />
-		                    <label for="itemnum5"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s01.jpg" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus5" onclick="minus_click(5);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea5" value="1" readonly />
-		                        <button class="plus" id="plus5" onclick="plus_click(5);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno5">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno5" value="10000" />
-		                    <input type="hidden" name="total_price" id="total_itemno5" value="10000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		
+		        </c:forEach>
+		            
 		            <tr>
 		                <td class="total_price" colspan="6">
-		                    상품구매금액 <strong class="price_strong">207,000원 </strong>+ 배송비 <strong class="delivery_strong">0원 </strong>= 합계 : <strong class="total_strong">207,000원</strong>
+		                    	상품구매금액 <strong class="price_strong">207,000원 </strong>+ 배송비 <strong class="delivery_strong">0원 </strong>= 합계 : <strong class="total_strong">207,000원</strong>
 		                </td>
 		            </tr>
 		        </tbody>

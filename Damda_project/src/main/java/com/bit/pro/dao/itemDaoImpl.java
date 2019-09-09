@@ -20,62 +20,38 @@ public class itemDaoImpl implements ItemDao {
 	
 	//home
 	@Override
-	public List<AllItemVo> selectHome(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".selectHome", map);
+	public List<AllItemVo> selectHome(AllItemVo bean) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".selectHome", bean);
 	}
 	
 	//main
 	@Override
-	public List<AllItemVo> selectItem(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".selectItem", map);
+	public List<AllItemVo> selectItem(AllItemVo bean) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".selectItem", bean);
 	}
 
 	@Override
-	public int totalItem(HashMap<String, Object> map) {
-		return sqlSession.selectOne(NAMESPACE +".totalItem",map);
+	public int totalItem(AllItemVo bean) {
+		return sqlSession.selectOne(NAMESPACE +".totalItem",bean);
 	}
 
 	//best
 	@Override
-	public List<AllItemVo> selectBest(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".selectBest",map);
+	public List<AllItemVo> selectBest(AllItemVo bean) throws Exception {
+		return sqlSession.selectList(NAMESPACE +".selectBest",bean);
 	}
 	
 	//detail
 	@Override
-	public AllItemVo selectOne(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectOne(NAMESPACE +".itemDetail", map);
+	public AllItemVo selectOne(AllItemVo bean) throws Exception {
+		return sqlSession.selectOne(NAMESPACE +".itemDetail", bean);
 	}
 
 	@Override
-	public String selectOne_detailImg(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectOne(NAMESPACE +".detailImg", map);
+	public List<AllItemVo> selectOne_detailImg(AllItemVo bean) throws Exception {
+		return sqlSession.selectList(NAMESPACE +".detailImg", bean);
 	}
 
-	//align
-	@Override
-	public List<AllItemVo> alignNew(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".alignNew", map);
-	}
 
-	@Override
-	public List<AllItemVo> alignBest(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".alignBest", map);
-	}
-
-	@Override
-	public List<AllItemVo> alignCheap(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".alignCheap", map);
-	}
-
-	@Override
-	public List<AllItemVo> alignExpen(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".alignExpen", map);
-	}
-	//item-insert
-	@Override 
-	public int insertItem(AllItemVo allitemVo) throws Exception {
-		return sqlSession.insert(NAMESPACE + ".insertAllitem",allitemVo);
-	}
 
 }

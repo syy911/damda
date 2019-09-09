@@ -24,7 +24,7 @@ import com.bit.pro.vo.AllItemVo;
 @Controller
 public class HomeController {
 	
-	//private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Resource
 	private ItemService itemService;
@@ -32,27 +32,9 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) throws Exception {
-		//best 
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startpoint", 0);
-		map.put("row", 6);
-		List<AllItemVo> list = itemService.selectBest(map);
-		model.addAttribute("List", list);
-		
-		//1=salad, 2=dessert, 3=drink
-		homeItem(model, 1);
-		homeItem(model, 2);
-		homeItem(model, 3);
-		
+		itemService.selectBest(0, 6, model);
+		itemService.selectHome(model);
 		return "home";
-	}
-	
-	public void homeItem(Model model, int num) throws Exception {
-		//1=salad, 2=dessert, 3=drink
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("num", num);
-		List<AllItemVo> list = itemService.selectHome(map);
-		model.addAttribute("List"+num, list);
 	}
 	
 	@RequestMapping(value = "/itemList", method = RequestMethod.GET)
