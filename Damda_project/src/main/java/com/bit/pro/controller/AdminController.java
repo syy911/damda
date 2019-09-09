@@ -1,11 +1,8 @@
 package com.bit.pro.controller;
 
 import java.sql.SQLException;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.bit.pro.service.AdminService;
 import com.bit.pro.service.MateService;
 import com.bit.pro.util.pagination;
 import com.bit.pro.vo.AllItemVo;
-import com.bit.pro.vo.EventVo;
 import com.bit.pro.vo.MateVo;
 import com.bit.pro.vo.PhotoVo;
 
@@ -59,14 +54,14 @@ public class AdminController {
 		return dir+"/itemlist";
 	}
 	
-	//item등록페이지
+	//item 등록페이지
 	@RequestMapping(value = "/itemregi", method = RequestMethod.GET)
 	public String itemRegi() {
 		
 		return dir+"/itemRegist";
-	}
+	} 
 	
-	//상품등록시 썸네일이
+	//상품등록하는 코드(지정한 폴더에 사진이 저장됨)
 	@RequestMapping(value = "/itemregi", method = RequestMethod.POST)
 	public String itemRegiSave(MultipartHttpServletRequest multi,AllItemVo allitemVo,PhotoVo photoVo) throws Exception {
 
@@ -81,6 +76,13 @@ public class AdminController {
 		}
 
 	}
+	//item 수정페이지
+	@RequestMapping(value = "/itemupdate", method = RequestMethod.GET)
+	public String itemUpdate() {
+		//프론트부터 주소로가르기 원페이지
+
+		return dir+"/itemRegist";
+	} 
 	
 	//--------------------커스텀 등록----------------------
 	@RequestMapping(value = "/materegi", method = RequestMethod.GET)

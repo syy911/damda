@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
 	//Main
 	@Override
 	public List<AllItemVo> selectItem(HashMap<String, Object> map) throws Exception {
-		logger.debug("출력: "+itemDao.selectHome(map));
+	//	logger.debug("출력: "+itemDao.selectHome(map));
 		return itemDao.selectItem(map);
 	}
 

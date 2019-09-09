@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -299,11 +300,11 @@
 				<div class="row col-md-offset-1 col-md-10 col-sm-12">
 			</c:if>
 	        <div class="col-xs-4 col-sm-4 col-md-4">
-		        <div class="thumbnail">
+		        <div class="thumbnail">   
 		        	<a href="/item/detail?no=${List.itemNum}">
 		        	<div class="best_div">best</div>
-		            <img src="${List.photoPath}" />
-		            </a>
+			            <img src="<spring:url value='/imgs/${List.ctgToadd }/${List.photoName }'/>" />
+		            </a>     
 		            <div class="caption">
 		                <a href="/item/detail?no=${List.itemNum}">
 		                <h3>${List.itemName}</h3>

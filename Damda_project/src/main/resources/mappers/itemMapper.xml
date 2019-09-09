@@ -71,4 +71,12 @@
  <select id="alignExpen" parameterType="HashMap" resultType="allitemVo">
  	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemprice desc limit #{startpoint}, #{row} 
  </select>
+ 
+<!--  item-insert -->
+
+ <insert id="insertAllitem" parameterType="allitemVo">
+ 	 INSERT INTO ALLITEM (category,itemprice, itemname, itemcon,itemstock)
+     VALUES (#{category},#{itemPrice},#{itemName}, #{itemCon},#{itemStock}); 
+ </insert>
+     
 </mapper>
