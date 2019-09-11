@@ -21,22 +21,7 @@
     margin: 0px;
     padding: 7px;
     }
-    #noticeTab img {
-    width: 13px;
-    height: 15px;
-    }
-    #noticeTab tbody textarea {
-    margin-top: 2%; 
-    margin-bottom: 2%;
-    }
-    #noticeTab .form-group {
-    width: 35%;
-    height: 5px;
-    margin-top: -7px;
-    }
-    #noticeTab #userfile {
-    cursor: default;
-    }
+    
     #pgTransition img {
     width: 12px; 
     height: 8px;
@@ -57,7 +42,25 @@
     overflow: hidden;
     margin-left:25px;
 	}
-	
+	.ImgBtn{
+		width:100%;
+		margin:0px auto;
+	}
+	.ImgField{
+		display:inline-block;
+		width:100%;
+		text-align:center;
+	}
+	.ImgField #thImg{
+		width:200px;
+		height:200px;
+		display:none;
+	}
+	.ImgField #deImg{
+		width:490px;
+		height:490px;
+		display:none;
+	}
 	.btn-file input[type=file] {
 	    position: absolute;
 	    top: 0;
@@ -73,10 +76,11 @@
 	    cursor: inherit;
 	    display: block;
 	}
-	
+	thead tr>th{
+		text-align:center;
+	}
 	thead tr:nth-child(1)>th{
-		vertiacl-align: middle;
-		line-height:180px;
+		margin:0px auto;
 	}
 
 	tbody tr:nth-child(2)>th{
@@ -86,41 +90,13 @@
 	
     </style>
     <script type="text/javascript">
+   
     $(document).ready(function(){
        $('#vegeSelect').hide();
        $('#toppingSelect').hide();
        
        resized2();
-       //들어오는 세션따라 보이는 부분다르게(관리자 // USER)
-       //들어오는 주소따라 등록버튼 동작 다름(백...?)
-       //수정-등록 & 입력-등록
-       //비동기로 입력,등록하고 성공하면 페이지 이동
-       var url = window.location.pathname;
-       var location = url.substring(url.lastIndexOf("/")+1);
-       if(location=='notice.insert'){
-             /* location.replace('/notice');  */
-             console.log(location);
-             $( 'input' ).removeAttr( 'value' );   
-             $('#contentNotice').val('');
-       }else if(location=='notice.update'){
-          console.log(location);
-          $( 'input' ).removeAttr( 'placeholder' );
-       }
-
-       $('#cancleBtn').click(function(){
-          window.location.replace('/admin/'); 
-       });
        
-       //첨부파일 이름 추출
-       $("#fileInput").on('change', function(){  // 값이 변경되면
-      if(window.FileReader){  // modern browser
-         var filename = $(this)[0].files[0].name;
-      } else {  // old IE
-         var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
-      }
-      // 추출한 파일명 삽입
-      $("#userfile").val(filename);
-   });
     });
     $(window).resize(function() {
         resized2();
@@ -162,7 +138,7 @@ function ctgChange(e){
    <div class="container-fluid text-center">
     <div class="row">
        <div class="col-md-offset-2 col-md-8">
-          <form id="eventINPUT" action="/admin/" method="post">
+          <form id="eventINPUT" enctype="multipart/form-data" action="/admin/" method="post">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <br /><br />
             <div id="pgnameWrap">
@@ -176,19 +152,31 @@ function ctgChange(e){
             <thead>   
                <tr>
                   <th class="col-md-2 col-sm-2 col-xs-3">재료이미지</th>
-                  <td class="col-md-10 col-sm-10 col-xs-9">
-                  
-					  <div class="file-field">
-					    <div class="itemThumb">
-					      <img src="" />
+                  <td class="col-md-10 col-sm-10 col-xs-9 InputImg">                  
+					  <div class="file-field ImgField">
+					    <!-- 썸네일 -->
+					    <div class="mateThumb">
+					      <img class="inputImg" id="thImg" src=""/>
 					    </div>
-					    <div class="d-flex justify-content-center">
+					    
+					    <div class="d-flex justify-content-center ImgBtn">
 					      <span class="btn btn-default btn-file">
-							    이미지 찾기 <input type="file" id="gdsIms" name="file" />
+							   썸네일 이미지 찾기 <input type="file" class="img" id="mateImgth" name="file" />
+							   <script>
+							   $('#mateImgth').change(function(){
+								   if(this.files && this.files[0]){
+									   var reader = new FileReader;
+									   reader.onload = function(data){
+										   $('#thImg').attr("src",data.target.result);
+										   $('#thImg').show();
+										   }
+									   reader.readAsDataURL(this.files[0]);
+									   }
+								   });	
+							   </script>
 							</span>
-					    </div>
-					  </div>
-				
+					    </div>    
+					  </div>				
                   </td>
                </tr>
                <tr>
@@ -232,7 +220,36 @@ function ctgChange(e){
                				<option value="1">판매중</option>
                			</select>
                		</td>
-               </tr>               
+               </tr>
+               <tr>
+               		<th>디텔</th>
+					<td>
+               		<div class="file-field ImgField">
+					    <!-- 디테일 -->
+					    <div class="mateDetail">
+					      <img class="inputImg" id="deImg" src=""/>
+					    </div>
+					    
+					    <div class="d-flex justify-content-center ImgBtn">
+					      <span class="btn btn-default btn-file">
+							   디테일 이미지찾기 <input type="file" class="img" id="mateImgde" name="file2" />
+							   <script>
+							   $('#mateImgde').change(function(){
+								   if(this.files && this.files[0]){
+									   var reader = new FileReader;
+									   reader.onload = function(data){
+										   $('#deImg').attr("src",data.target.result);
+										   $('#deImg').show();
+										   }
+									   reader.readAsDataURL(this.files[0]);
+									   }
+								   });	
+							   </script>
+							</span>
+					    </div>    
+					  </div>
+					 </td>				
+               </tr>                
             </thead>
          </table>
          </div>

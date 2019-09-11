@@ -1,5 +1,6 @@
 package com.bit.pro.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.bit.pro.service.AdminService;
@@ -89,21 +91,29 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/",method=RequestMethod.POST)
-	public String mateInsert(@ModelAttribute MateVo mateVo) throws SQLException {//입력페이지->리스트
-		mateService.insertMate(mateVo);
-		return "redirect:/admin/";
+	public String mateInsert(MultipartHttpServletRequest multi,MateVo mateVo,PhotoVo photoVo) throws IOException, Exception {//입력페이지->리스트
+		
+		int returnResult = mateService.insertMate(mateVo, photoVo, multi); 
+		//리턴결과	
+		if(returnResult==1) {
+			return "redirect:/admin/";	
+		}else {
+			return dir+"/mateRegi";
+		}
+
 	}
 	
 	@RequestMapping(value="/detail/{idx}",method=RequestMethod.GET)
-	public String mateDetail(@PathVariable("idx") int matenum,Model model) {
-		mateService.selectMateOne(matenum, model);
+	public String mateDetail(@PathVariable("idx") int matenum,PhotoVo photoVo,Model model) {
+		model.addAttribute("mateone",mateService.selectMateOne(matenum, photoVo, model));
+		logger.info("선택>>>>>"+model.addAttribute("mateone",mateService.selectMateOne(matenum, photoVo, model)));
 		return dir+"/mateDetail";
 	}
 	
 	@RequestMapping(value="/detail/{idx}",method= {RequestMethod.PUT,RequestMethod.POST})
 	public String mateUpdate(@PathVariable("idx") int matenum,@ModelAttribute MateVo mateVo) {
 		mateService.updateMate(mateVo);
-		logger.debug("수정>>>>>"+mateVo.toString());
+		logger.info("수정>>>>>"+mateVo.toString());
 		return "redirect:/admin/detail/"+matenum;
 	}
 	@RequestMapping(value="/delete/{idx}",method= RequestMethod.GET)

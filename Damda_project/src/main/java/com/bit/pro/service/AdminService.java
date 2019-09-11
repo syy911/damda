@@ -14,6 +14,7 @@ public interface AdminService {
 //	int insertItem(AllitemVo allitemVo) throws Exception; 
 //	int insertPhoto(PhotoVo photoVo) throws Exception; 
 	
+
 	int insertAllitem(AllItemVo allitemVo,PhotoVo photoVo,MultipartHttpServletRequest multi) throws Exception;
 	
 

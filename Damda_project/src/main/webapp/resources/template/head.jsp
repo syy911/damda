@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+   	<link rel=" shortcut icon" href="/resources/favicon/favicon.png">
+   	<link rel="icon" href="/resources/favicon/favicon.png">
     <title>Dam da :) </title>
     <link rel="stylesheet" href="/resources/css/bootstrap-theme.css" />
     <link rel="stylesheet" href="/resources/css/bootstrap.css" />

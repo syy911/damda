@@ -1,5 +1,6 @@
 package com.bit.pro.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bit.pro.service.CartService;
 import com.bit.pro.service.JoinService;
 import com.bit.pro.service.LoginService;
 import com.bit.pro.vo.JoinVo;
@@ -34,6 +37,9 @@ public class LoginController {
 	@Resource
 	private LoginService loginService;
 	
+	@Resource
+	private CartService cartService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String loginGet() {
 		return dir+"/login";
@@ -41,7 +47,7 @@ public class LoginController {
 	
 	//로그인
 	@RequestMapping(value = "/loginErr", method = RequestMethod.POST)
-	public ModelAndView loginPost(@ModelAttribute LoginVo loginVo,String id,String password,HttpServletRequest req,HttpSession session,Model model) throws SQLException {
+	public ModelAndView loginPost(@ModelAttribute LoginVo loginVo,String id,String password,HttpServletRequest req,HttpSession session,Model model, HttpServletResponse response) throws SQLException, IOException {
 		ModelAndView mav=new ModelAndView();
 		session = req.getSession();
 		
@@ -58,7 +64,10 @@ public class LoginController {
 			session.setAttribute("userid", id);
 			session.setAttribute("username", map.get("username"));
 			session.setAttribute("user_ctg", (int)map.get("category"));
+			session.setAttribute("userNum", (int)map.get("usernum"));
 			System.out.println("user_ctg: " + map.get("category"));
+			System.out.println("userNum: " + map.get("usernum"));
+			
 			mav.setViewName("redirect:/");
 		}else{				//로그인실패시 로그인페이지로 이동
 			mav.setViewName("login/login");
@@ -74,6 +83,7 @@ public class LoginController {
 		session.removeAttribute("userid");
 		session.removeAttribute("username");
 		session.removeAttribute("user_ctg");
+		session.removeAttribute("userNum");
 		
 		return "redirect:/";
 	}

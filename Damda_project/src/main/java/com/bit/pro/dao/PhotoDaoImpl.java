@@ -18,4 +18,9 @@ public class PhotoDaoImpl implements PhotoDao {
 		return sqlSession.insert(NAMESPACE + ".insertPhoto",photoVo);
 	}
 
+	@Override
+	public int insertMatePhoto(PhotoVo photoVo) throws Exception {
+		return sqlSession.insert(NAMESPACE+ ".insertMatePhoto",photoVo);
+	}
+
 }

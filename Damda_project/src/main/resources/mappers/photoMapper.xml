@@ -12,7 +12,14 @@
      VALUES (#{photoCtg},#{photoCtg2},#{photoPath}, #{photoName}, #{originalName},#{p_itemNum})
 <!--   외래키 p_itemnum current_val로 받아와야해 allitem 먼저 들어가면서 시퀀스 생성해주는걸로 받아오기 --> 	
  </insert>
-  
+ <insert id="insertMatePhoto" parameterType="photoVo">
+ 	<selectKey keyProperty="p_ingredientNum" resultType="int" order="BEFORE">
+ 		SELECT MAX(MATENUM) AS P_INGREDIENTNUM FROM MATERIAL
+ 	</selectKey>
+ 	 INSERT INTO PHOTO (PHOTOCTG, PHOTOCTG2, PHOTOPATH, PHOTONAME, ORIGINALNAME, P_INGREDIENTNUM) VALUES ('4', #{photoCtg2}, #{photoPath}, #{photoName}, #{originalName}, #{p_ingredientNum})
+ </insert>
+ 
+ 
 
     
 </mapper>

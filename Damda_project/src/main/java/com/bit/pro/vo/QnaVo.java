@@ -13,13 +13,19 @@ public class QnaVo {
 	private String qnaPw;
 	private String qnaCon;
 	private String answerCon;
-	private String qnaStatus;
+	private String answerStatus;
 	private Date qnaDate;
+	
+	private int ROWNUM;
+	private int whatBtn;
+	private int nextBtnClick;
+	private int totalCount;
 	public QnaVo() {
 		// TODO Auto-generated constructor stub
 	}
 	public QnaVo(int qnaNum, String useremail, String userName, int userNum, String qnaSub, String qnaKind,
-			String qnaPw, String qnaCon, String answerCon, String qnaStatus, Date qnaDate) {
+			String qnaPw, String qnaCon, String answerCon, String answerStatus, Date qnaDate, int rOWNUM, int whatBtn,
+			int nextBtnClick, int totalCount) {
 		super();
 		this.qnaNum = qnaNum;
 		this.useremail = useremail;
@@ -30,10 +36,13 @@ public class QnaVo {
 		this.qnaPw = qnaPw;
 		this.qnaCon = qnaCon;
 		this.answerCon = answerCon;
-		this.qnaStatus = qnaStatus;
+		this.answerStatus = answerStatus;
 		this.qnaDate = qnaDate;
+		ROWNUM = rOWNUM;
+		this.whatBtn = whatBtn;
+		this.nextBtnClick = nextBtnClick;
+		this.totalCount = totalCount;
 	}
-
 	public int getQnaNum() {
 		return qnaNum;
 	}
@@ -88,11 +97,11 @@ public class QnaVo {
 	public void setAnswerCon(String answerCon) {
 		this.answerCon = answerCon;
 	}
-	public String getQnaStatus() {
-		return qnaStatus;
+	public String getAnswerStatus() {
+		return answerStatus;
 	}
-	public void setQnaStatus(String qnaStatus) {
-		this.qnaStatus = qnaStatus;
+	public void setAnswerStatus(String answerStatus) {
+		this.answerStatus = answerStatus;
 	}
 	public Date getQnaDate() {
 		return qnaDate;
@@ -100,11 +109,36 @@ public class QnaVo {
 	public void setQnaDate(Date qnaDate) {
 		this.qnaDate = qnaDate;
 	}
+	public int getROWNUM() {
+		return ROWNUM;
+	}
+	public void setROWNUM(int rOWNUM) {
+		ROWNUM = rOWNUM;
+	}
+	public int getWhatBtn() {
+		return whatBtn;
+	}
+	public void setWhatBtn(int whatBtn) {
+		this.whatBtn = whatBtn;
+	}
+	public int getNextBtnClick() {
+		return nextBtnClick;
+	}
+	public void setNextBtnClick(int nextBtnClick) {
+		this.nextBtnClick = nextBtnClick;
+	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
 	@Override
 	public String toString() {
 		return "QnaVo [qnaNum=" + qnaNum + ", useremail=" + useremail + ", userName=" + userName + ", userNum="
 				+ userNum + ", qnaSub=" + qnaSub + ", qnaKind=" + qnaKind + ", qnaPw=" + qnaPw + ", qnaCon=" + qnaCon
-				+ ", answerCon=" + answerCon + ", qnaStatus=" + qnaStatus + ", qnaDate=" + qnaDate + "]";
-	}
-	
+				+ ", answerCon=" + answerCon + ", answerStatus=" + answerStatus + ", qnaDate=" + qnaDate + ", ROWNUM="
+				+ ROWNUM + ", whatBtn=" + whatBtn + ", nextBtnClick=" + nextBtnClick + ", totalCount=" + totalCount
+				+ "]";
+	}	
 }

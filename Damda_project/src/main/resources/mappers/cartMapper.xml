@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit.pro.mappers.cartMapper"> 
+ <!-- detail에서 장바구니 담기 회원/비회원-->
+ <insert id="insertCart" parameterType="cartVo">
+	insert into cart (c_usernum, c_itemnum, ea) values (#{c_userNum}, #{c_itemNum}, #{ea})
+ </insert>
+ 
+  <insert id="insertCart_noUser" parameterType="cartVo">
+	insert into cart (c_nousernum, c_itemnum, ea) values (#{c_nouserNum}, #{c_itemNum}, #{ea})
+ </insert>
+     
+ <!-- 장바구니 출력 회원/비회원 -->   
+ <select id="selectCart" parameterType="cartVo" resultType="cartVo">
+ 	select * from cart join photo on cart.c_itemnum = photo.p_itemnum join allitem on cart.c_itemnum = allitem.itemnum where photoctg2='thumbnail' and c_usernum=#{c_userNum} order by cartnum desc
+ </select>
+ <select id="selectCart2" parameterType="cartVo" resultType="cartVo">
+ 	select * from cart join custom on cart.c_customnum = custom.cstmtnum join photo on cart.c_customnum = photo.p_customnum where photoctg2 ='thumbnail' and c_usernum =#{c_userNum} order by cartnum desc
+ </select>
+ 
+ <select id="selectCart_noUser" parameterType="cartVo" resultType="cartVo">
+ 	select * from cart join photo on cart.c_itemnum = photo.p_itemnum join allitem on cart.c_itemnum = allitem.itemnum where photoctg2='thumbnail' and c_nousernum=#{c_nouserNum} order by cartnum desc
+ </select>
+ <select id="selectCart_noUser2" parameterType="cartVo" resultType="cartVo">
+ 	select * from cart join custom on cart.c_customnum = custom.cstmtnum join photo on cart.c_customnum = photo.p_customnum where photoctg2 ='thumbnail' and c_nousernum=#{c_nouserNum} order by cartnum desc
+ </select>
+ 
+ <!-- 비회원에서 회원장바구니로 update -->
+ <update id="noUser_updateCart" parameterType="cartVo">
+ 	update cart set c_usernum = #{c_userNum} where c_nousernum=#{c_nouserNum}
+ </update>
+ <!-- 회원장바구니로 이동후 비회원 정보 지우기 -->
+ <update id="User_updateCart" parameterType="cartVo">
+ 	update cart set c_nousernum='' where c_usernum = #{c_userNum}
+ </update>
+ 
+ <!-- 회원 장바구니 수량 변경 -->
+ <update id="userUpdate_item" parameterType="cartVo">
+ 	update cart set ea = #{ea } where c_usernum = #{c_userNum} and c_itemnum = #{c_itemNum}
+ </update>
+ 
+</mapper>

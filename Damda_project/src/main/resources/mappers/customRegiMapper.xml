@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.bit.pro.mappers.customRegiMapper">
@@ -14,17 +14,15 @@
  <insert id="insertMate" parameterType="com.bit.pro.vo.MateVo">
  	INSERT INTO MATERIAL (MATENAME, MATEPRICE, MATECTG, SALESTATUS) VALUES (#{mateName},#{mateprice},#{matectg},#{salestatus})
  </insert>
- <select id="selectMateOne" parameterType="int" resultType="com.bit.pro.vo.MateVo">
+  <!--<select id="selectMateOne" parameterType="int" resultType="com.bit.pro.vo.MateVo">
   	SELECT * FROM MATERIAL WHERE MATENUM=#{matenum}
-  </select>
- <!-- 사진 -->
- <select id="selectMatePhoto" parameterType="int" resultType="com.bit.pro.vo.MateVo">
- 	SELECT PHOTOPATH FROM PHOTO JOIN MATERIAL ON P_MATENUM=MATENUM
+  </select>-->
+ <select id="selectMateOne"  resultType="com.bit.pro.vo.MateVo">
+ SELECT PHOTO.PHOTOCTG2, PHOTO.P_INGREDIENTNUM, PHOTO.PHOTOPATH, PHOTO.PHOTONAME, PHOTO.ORIGINALNAME , MATERIAL.* FROM PHOTO JOIN MATERIAL ON MATENUM=P_INGREDIENTNUM WHERE MATENUM=#{MATENUM}
  </select>
  <update id="updateMate" parameterType="com.bit.pro.vo.MateVo">
  	UPDATE MATERIAL SET MATENAME=#{mateName}, MATEPRICE=#{mateprice}, MATECTG=#{matectg},SALESTATUS=#{salestatus} WHERE MATENUM=#{matenum}  
  </update>
- 
  <delete id="deleteMate" parameterType="int">
  	DELETE FROM MATERIAL WHERE MATENUM=#{matenum}
  </delete>

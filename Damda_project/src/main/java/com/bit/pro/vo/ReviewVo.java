@@ -13,7 +13,7 @@ public class ReviewVo {
 	
 	//photo table
 	private int photoNum;
-	private int photoCtg;
+	private String photoCtg;
 	private String photoCtg2;
 	private String photoPath;
 	private String photoName;
@@ -24,6 +24,7 @@ public class ReviewVo {
 	private int p_eventNum;
 	private int p_noticeNum;
 	private int p_qnaNum;
+	private int p_customNum;
 	
 	//userinfo
 	private int userNum;
@@ -41,6 +42,14 @@ public class ReviewVo {
 	private String userGrade;
 	private int category;
 	private int userPoint;
+	
+	//페이징
+	private int p;
+	private int startpoint;
+	private int row;
+	
+	//아이템정렬 
+	private String itemalign;
 	
 	public ReviewVo() {	}
 
@@ -108,11 +117,11 @@ public class ReviewVo {
 		this.photoNum = photoNum;
 	}
 
-	public int getPhotoCtg() {
+	public String getPhotoCtg() {
 		return photoCtg;
 	}
 
-	public void setPhotoCtg(int photoCtg) {
+	public void setPhotoCtg(String photoCtg) {
 		this.photoCtg = photoCtg;
 	}
 
@@ -194,6 +203,14 @@ public class ReviewVo {
 
 	public void setP_qnaNum(int p_qnaNum) {
 		this.p_qnaNum = p_qnaNum;
+	}
+
+	public int getP_customNum() {
+		return p_customNum;
+	}
+
+	public void setP_customNum(int p_customNum) {
+		this.p_customNum = p_customNum;
 	}
 
 	public int getUserNum() {
@@ -316,20 +333,56 @@ public class ReviewVo {
 		this.userPoint = userPoint;
 	}
 
+	public int getP() {
+		return p;
+	}
+
+	public void setP(int p) {
+		this.p = p;
+	}
+
+	public int getStartpoint() {
+		return startpoint;
+	}
+
+	public void setStartpoint(int startpoint) {
+		this.startpoint = startpoint;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public String getItemalign() {
+		return itemalign;
+	}
+
+	public void setItemalign(String itemalign) {
+		this.itemalign = itemalign;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + adminSelect;
 		result = prime * result + category;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((itemalign == null) ? 0 : itemalign.hashCode());
 		result = prime * result + ((originalName == null) ? 0 : originalName.hashCode());
+		result = prime * result + p;
+		result = prime * result + p_customNum;
 		result = prime * result + p_eventNum;
 		result = prime * result + p_ingredientNum;
 		result = prime * result + p_itemNum;
 		result = prime * result + p_noticeNum;
 		result = prime * result + p_qnaNum;
 		result = prime * result + p_reviewNum;
-		result = prime * result + photoCtg;
+		result = prime * result + ((photoCtg == null) ? 0 : photoCtg.hashCode());
 		result = prime * result + ((photoCtg2 == null) ? 0 : photoCtg2.hashCode());
 		result = prime * result + ((photoName == null) ? 0 : photoName.hashCode());
 		result = prime * result + photoNum;
@@ -339,6 +392,8 @@ public class ReviewVo {
 		result = prime * result + recommend;
 		result = prime * result + ((reviewCon == null) ? 0 : reviewCon.hashCode());
 		result = prime * result + reviewNum;
+		result = prime * result + row;
+		result = prime * result + startpoint;
 		result = prime * result + ((userAcc == null) ? 0 : userAcc.hashCode());
 		result = prime * result + ((userAccowner == null) ? 0 : userAccowner.hashCode());
 		result = prime * result + ((userBank == null) ? 0 : userBank.hashCode());
@@ -369,10 +424,24 @@ public class ReviewVo {
 			return false;
 		if (category != other.category)
 			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (itemalign == null) {
+			if (other.itemalign != null)
+				return false;
+		} else if (!itemalign.equals(other.itemalign))
+			return false;
 		if (originalName == null) {
 			if (other.originalName != null)
 				return false;
 		} else if (!originalName.equals(other.originalName))
+			return false;
+		if (p != other.p)
+			return false;
+		if (p_customNum != other.p_customNum)
 			return false;
 		if (p_eventNum != other.p_eventNum)
 			return false;
@@ -386,7 +455,10 @@ public class ReviewVo {
 			return false;
 		if (p_reviewNum != other.p_reviewNum)
 			return false;
-		if (photoCtg != other.photoCtg)
+		if (photoCtg == null) {
+			if (other.photoCtg != null)
+				return false;
+		} else if (!photoCtg.equals(other.photoCtg))
 			return false;
 		if (photoCtg2 == null) {
 			if (other.photoCtg2 != null)
@@ -417,6 +489,10 @@ public class ReviewVo {
 		} else if (!reviewCon.equals(other.reviewCon))
 			return false;
 		if (reviewNum != other.reviewNum)
+			return false;
+		if (row != other.row)
+			return false;
+		if (startpoint != other.startpoint)
 			return false;
 		if (userAcc == null) {
 			if (other.userAcc != null)
@@ -476,63 +552,7 @@ public class ReviewVo {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "ReviewVo [reviewNum=" + reviewNum + ", r_userNum=" + r_userNum + ", r_itemNum=" + r_itemNum
-				+ ", reviewCon=" + reviewCon + ", adminSelect=" + adminSelect + ", recommend=" + recommend + ", date="
-				+ date + ", photoNum=" + photoNum + ", photoCtg=" + photoCtg + ", photoCtg2=" + photoCtg2
-				+ ", photoPath=" + photoPath + ", photoName=" + photoName + ", originalName=" + originalName
-				+ ", p_itemNum=" + p_itemNum + ", p_ingredientNum=" + p_ingredientNum + ", p_reviewNum=" + p_reviewNum
-				+ ", p_eventNum=" + p_eventNum + ", p_noticeNum=" + p_noticeNum + ", p_qnaNum=" + p_qnaNum
-				+ ", userNum=" + userNum + ", userId=" + userId + ", userPW=" + userPW + ", userName=" + userName
-				+ ", useraddr=" + useraddr + ", userPostnum=" + userPostnum + ", userPhone=" + userPhone
-				+ ", userEmail=" + userEmail + ", userBuy=" + userBuy + ", userAcc=" + userAcc + ", userBank="
-				+ userBank + ", userAccowner=" + userAccowner + ", userGrade=" + userGrade + ", category=" + category
-				+ ", userPoint=" + userPoint + "]";
-	}
 
-	public ReviewVo(int reviewNum, int r_userNum, int r_itemNum, String reviewCon, int adminSelect, int recommend,
-			Date date, int photoNum, int photoCtg, String photoCtg2, String photoPath, String photoName,
-			String originalName, int p_itemNum, int p_ingredientNum, int p_reviewNum, int p_eventNum, int p_noticeNum,
-			int p_qnaNum, int userNum, String userId, String userPW, String userName, String useraddr, int userPostnum,
-			int userPhone, String userEmail, int userBuy, String userAcc, String userBank, String userAccowner,
-			String userGrade, int category, int userPoint) {
-		super();
-		this.reviewNum = reviewNum;
-		this.r_userNum = r_userNum;
-		this.r_itemNum = r_itemNum;
-		this.reviewCon = reviewCon;
-		this.adminSelect = adminSelect;
-		this.recommend = recommend;
-		this.date = date;
-		this.photoNum = photoNum;
-		this.photoCtg = photoCtg;
-		this.photoCtg2 = photoCtg2;
-		this.photoPath = photoPath;
-		this.photoName = photoName;
-		this.originalName = originalName;
-		this.p_itemNum = p_itemNum;
-		this.p_ingredientNum = p_ingredientNum;
-		this.p_reviewNum = p_reviewNum;
-		this.p_eventNum = p_eventNum;
-		this.p_noticeNum = p_noticeNum;
-		this.p_qnaNum = p_qnaNum;
-		this.userNum = userNum;
-		this.userId = userId;
-		this.userPW = userPW;
-		this.userName = userName;
-		this.useraddr = useraddr;
-		this.userPostnum = userPostnum;
-		this.userPhone = userPhone;
-		this.userEmail = userEmail;
-		this.userBuy = userBuy;
-		this.userAcc = userAcc;
-		this.userBank = userBank;
-		this.userAccowner = userAccowner;
-		this.userGrade = userGrade;
-		this.category = category;
-		this.userPoint = userPoint;
-	}
 
 	
 }

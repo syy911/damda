@@ -5,70 +5,37 @@
   
  <mapper namespace="com.bit.pro.mappers.itemMapper">
  <!-- home -->
- <select id="selectHome" parameterType="HashMap" resultType="allitemVo">
-	select * from photo join allitem on photo.p_itemnum = allitem.itemnum where photoctg2='thumbnail' and category=#{num} order by itemnum desc limit 0,3;
+ <select id="selectHome" parameterType="allitemVo" resultType="allitemVo">
+	select * from photo join allitem on photo.p_itemnum = allitem.itemnum where photoctg2='thumbnail' and category=#{category} order by itemnum desc limit 0,3;
  </select>
  
  <!-- main -->
- <select id="selectItem" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemnum desc limit #{startpoint}, #{row} 
- </select>
-<!--  
- <select id="selectItem" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemnum desc limit #{startpoint}, #{row}
- 	<where>
-		<if test="select != null">
- 			photoctg2='thumbnail' and category=#{num} order by itemnum desc 
-		</if>
-		<if test="new != null">
- 			photoctg2='thumbnail' and category=#{num} order by itemnum desc 
-		</if>
-		<if test="best != null">
- 			photoctg2='thumbnail' and category=#{num} order by itemsales desc 
-		</if>
-		<if test="cheap != null">
- 			photoctg2='thumbnail' and category=#{num} order by itemprice desc 
-		</if>
-		<if test="expen != null">
- 			photoctg2='thumbnail' and category=#{num} order by itemprice asc 
-		</if>
-	</where>
-	limit #{startpoint}, #{row}
+ <select id="selectItem" parameterType="allitemVo" resultType="allitemVo">
+ 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{category} order by ${itemalign } limit #{startpoint}, #{row}
  </select> 
- -->
  
- <select id="totalItem" parameterType="HashMap" resultType="int">
- 	select count(*) from allitem where category=${num};
+ <select id="totalItem" parameterType="allitemVo" resultType="int">
+ 	select count(*) from allitem where category=${category};
  </select>
  
  <!-- best -->
- <select id="selectBest" parameterType="HashMap" resultType="allitemVo">
+ <select id="selectBest" parameterType="allitemVo" resultType="allitemVo">
  	select * from photo join allitem on photo.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' order by itemsales desc limit #{startpoint}, #{row}
  </select>
  
  <!-- detail -->
- <select id="itemDetail" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where itemnum=#{num} and photoctg2 ='thumbnail';
+ <select id="itemDetail" parameterType="allitemVo" resultType="allitemVo">
+ 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where itemnum=#{itemNum} and photoctg2 ='thumbnail';
  </select>
  
-<select id="detailImg" parameterType="HashMap" resultType="String">
-	SELECT photopath FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where itemnum=#{num} and photoctg2 ='detail';
+<select id="detailImg" parameterType="allitemVo" resultType="allitemVo">
+	SELECT photoctg, photoname FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where itemnum=#{itemNum} and photoctg2 ='detail';
 </select> 
 
-<!-- align -->
- <select id="alignNew" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemnum desc limit #{startpoint}, #{row} 
- </select>
- 
- <select id="alignBest" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemsales desc limit #{startpoint}, #{row} 
- </select>
- 
- <select id="alignCheap" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemprice asc limit #{startpoint}, #{row} 
- </select>
- 
- <select id="alignExpen" parameterType="HashMap" resultType="allitemVo">
- 	SELECT * FROM PHOTO join allitem on PHOTO.p_itemnum = allitem.itemnum where photoctg2 ='thumbnail' and category=#{num} order by itemprice desc limit #{startpoint}, #{row} 
- </select>
+<!-- insert -->
+ <insert id="insertAllitem" parameterType="allitemVo">
+     INSERT INTO ALLITEM (category,itemprice, itemname, itemcon,itemstock)
+     VALUES (#{category},#{itemPrice},#{itemName}, #{itemCon},#{itemStock}); 
+ </insert>
+
 </mapper>

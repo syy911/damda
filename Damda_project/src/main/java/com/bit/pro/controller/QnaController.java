@@ -2,24 +2,23 @@ package com.bit.pro.controller;
 
 import java.util.List;
 import java.util.Locale;
-
 import javax.annotation.Resource;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.bit.pro.service.QnaService;
 import com.bit.pro.vo.QnaVo;
 
 @Controller
 @RequestMapping("/qna")
 public class QnaController {
-	
+	 
 	String dir = "qna";
 	private static final Logger logger = LoggerFactory.getLogger(QnaController.class);
 	
@@ -29,9 +28,7 @@ public class QnaController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String qnaList(Locale locale, Model model) throws Exception {
-		logger.debug("get : /qna/qna.list");
-		
-		List<QnaVo> qnaList = qnaService.selectQna();
+		List<QnaVo> qnaList = qnaService.selectQnaList();
 		 model.addAttribute("qnaList", qnaList);
 		 
 		return dir+"/qna_list";

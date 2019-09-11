@@ -39,17 +39,17 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-		<!-- mybatis TransactionManager -->
+	<!-- mybatis TransactionManager -->
 	<bean  id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 	
-	<!-- 업로드 패스 설정 --> 
+	<!-- contigure uploadPath --> 
 	<bean class="java.lang.String" id="uploadPath">
 	 <constructor-arg value="C:\java\project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Damda_project\resources\imgs" />
 	</bean>
-	
+
 	<!-- Register bean -->
 	<context:component-scan base-package="com.bit.pro.dao"></context:component-scan>
 	<context:component-scan base-package="com.bit.pro.service"></context:component-scan>

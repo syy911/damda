@@ -150,11 +150,12 @@
             border: 0px;
             float: right;
             font-size:12px;
-
         }
 
         #content .content_review table {
             font-size: 13px;
+            border-bottom: 1px solid darksalmon;
+            border-top: 2px solid darksalmon;
         }
 
         #content .content_review table tr:nth-child(2n-1) {
@@ -174,7 +175,7 @@
         }
 
         #content .content_review table tr th:nth-child(2) {
-            width: 35%;
+            width: 45%;
         }
 
         #content .content_review table tr th:nth-child(3) {
@@ -182,28 +183,40 @@
         }
 
         #content .content_review table tr th:nth-child(4) {
-            width: 17%;
+            width: 20%;
         }
 
         #content .content_review table tr th:nth-child(5) {
-            width: 13%;
+            width: 5%;
+            text-align: left;
         }
 
         #content .content_review table tr td:nth-child(6) {
-            width: 10%;
+            width: 5%;
+        }
+        
+        #content .content_review table tr td:nth-child(2){
+        	text-align: left;
         }
 
         #content .content_review table img {
-            width: 65%;
-            display: inline-block;
-            float: left;
+            width: 60%;
+            display: block;
+            margin: 10px auto;
         }
 
         #content .content_review table p {
-            display: inline-block;
-            margin: 10px;
+        	width: 80%;
+            display: block;
+            margin: 10px auto;
         }
-
+        
+ 		#content .content_review table a{
+ 			text-decoration: none;
+ 			color: black;
+ 			font-weight: bold;
+ 		}
+ 		
         #content .content_review table .toggler {
             display: none;
         }
@@ -211,7 +224,7 @@
         #content .content_review table .toggler1 {
             display: table-row;
         }
-        
+
         #content .list_div{
         	margin-bottom: 50px;
         }
@@ -223,7 +236,6 @@
         #content .pagination>li>a:hover {
             font-weight: bold;
         }
-
 
         /*gird()***********************************************/
         #content .content_header .md_div {
@@ -251,6 +263,49 @@
         .md_divline2 {
             display: none;
         }
+        /*modal***************************************************/
+        #content .modal .modal-title {
+            color: darksalmon;
+        }
+
+        #content .modal .modal-dialog {
+            width: 400px;
+        }
+
+        #content .modal .modal-body {
+            text-align: center;
+        }
+
+        #content .modal .modal-footer {
+            background-color: #f7f7f9;
+
+        }
+
+        #content .modal .m_btn_div {
+            width: 250px;
+            display: block;
+            margin: 0px auto;
+        }
+
+        #content .modal .btn {
+            border-radius: 0px;
+            width: 120px;
+            border: 1px solid #f1d0bd;
+        }
+
+        #content .modal .btn-primary {
+            background-color: #f1d0bd;
+        }
+
+        #content .modal .btn-default {
+            background-color: white;
+        }
+
+        #content .modal .btn:hover {
+            border: 1px solid darksalmon;
+            background-color: darksalmon;
+            color: white;
+        }
 	</style>
     <script type="text/javascript">
     
@@ -274,6 +329,8 @@
 			$('#ea').css('top','-1px');
         }
 
+        //모달에서 버튼 클릭이벤트
+        item_modal();
     });
 
     $(window).resize(function() {
@@ -330,16 +387,6 @@
             $('h4').css('margin-top', '0px');
             $('.btn').removeClass('btn-sm');
         }
-    }
-
-    //리뷰 테이블 클릭이벤트
-    function table_content() {
-        $("tbody tr").click(function() {
-            $(this).parents(".custom-table").find(".toggler1").removeClass("toggler1");
-            $(this).parents("tbody").find(".toggler").addClass("toggler1");
-            $(this).parents(".custom-table").find(".fa-minus-circle").removeClass("fa-minus-circle");
-            $(this).parents("tbody").find(".fa-plus-circle").addClass("fa-minus-circle");
-        });
     }
 
     //하단 정보 div
@@ -427,18 +474,108 @@
         return totalPrice;
     }
 
-    function sub(){
+    //select box 이벤트
+    function select_event() {
+        //hidden val
+	    var no = $('#reviewalign').val();
+	    console.log(" >>> reviewalign : " + reviewalign);
+	    var no = $('#no').val();
+	    console.log(" >>> no : " + no);
+	    
+       //select val
+       var select_val = $('.reviewalign').val();
+       console.log('select value: '+select_val);
+       
+       $.ajax({
+			url:"/item/detail?no="+no+"&align="+reviewalign,
+			type:'get',
+			data:"",
+			success: function(data){
+	        	console.log('success');
+	        	$('#review_div').load('/item/review?no='+no+'&align='+select_val); 
+	        }
+		});
+    }  
 
+
+  	//리뷰 테이블 클릭이벤트
+    function table_content() {
+        $("tbody tr").click(function() {
+            $(this).parents(".custom-table").find(".toggler1").removeClass("toggler1");
+            $(this).parents("tbody").find(".toggler").addClass("toggler1");
+            $(this).parents(".custom-table").find(".fa-minus-circle").removeClass("fa-minus-circle");
+            $(this).parents("tbody").find(".fa-plus-circle").addClass("fa-minus-circle");
+        });
     }
+
+  	//모달에서 버튼 클릭이벤트
+    function item_modal(){
+
+		//장바구니 모달
+    	$('#cartok1').click(function(){
+        	var no = $('#no').val();
+        	console.log(no);
+        	var ea = $('#ea').val();
+        	console.log(ea);
+        	var userNum = $('#userNum').val();
+        	console.log(userNum);
+ 		 	$.ajax({
+ 				url:'/item/detail?no='+no+'&ea='+ea+'&usernum='+userNum,
+ 				type:'post',
+ 				data:'',
+ 				success: function(data){
+ 		        	console.log('success');
+ 		        }
+ 			});
+        });
+        
+    	$('#cartok2').click(function(){
+			location.href = '/mypage/cart';
+        });
+
+        //찜 모달
+		$('#jjimok1').click(function(){
+			
+        });
+    	$('#jjimok2').click(function(){
+			location.href = '/mypage/jjim';
+        });
+
+    	//비회원 모달
+    	$('#noUser_cartok').click(function(){
+    		var no = $('#no').val();
+        	console.log(no);
+        	var ea = $('#ea').val();
+        	console.log(ea);
+        	
+ 		 	$.ajax({
+ 				url:'/item/detail?no='+no+'&ea='+ea,
+ 				type:'put',
+ 				data:'',
+ 				success: function(data){
+ 		        	console.log('success');
+ 		        }
+ 			});
+        });
+    	
+    	$('#userok').click(function(){
+			location.href='/login/';
+       	});
+    };
+    
     </script>
 </head>
 <body>
 <jsp:include page="/resources/template/header.jsp"/>
 <!-- content start -->
+<input type="hidden" id="reviewalign" value="${reviewalign }"/>
+<input type="hidden" id="no" value="${no }"/>
+<input type="hidden" id="userNum" value="<%=session.getAttribute("userNum")%>"/>
+
 	<!--header-->
 	<div class="col-md-12 col-sm-12 content_header">
 	    <div class="col-md-offset-2 col-md-4 col-sm-4">
-	        <img alt="itemimg" id="itemimg" src="${List.photoPath }" />
+	        <img alt="itemimg" id="itemimg" src="/resources/imgs/${List.photoCtg }/${List.photoName}" />
 	    </div>
 	    <div class="col-md-4 col-sm-7 col-xs-offset-1 col-xs-10" id="item_info">
 	        <h3>${List.itemName }</h3>
@@ -471,9 +608,17 @@
             <input type="hidden" name="totalPrice" id="totalPrice"/>
             
 	        <div class="btn_div">
-	            <button type="button" class="btn btn-lg">
+	          	<%//회원일 때
+	          	if(session.getAttribute("user_ctg")!=null){ %>
+	          	<button type="button" class="btn btn-lg" data-toggle="modal" data-target="#cartModal1" id="cart_btn">
 	                &nbsp;&nbsp;&nbsp;<img src="/resources/icon/cart.png" />장바구니 담기 &nbsp;&nbsp;</button>
-	            <button type="button" class="btn btn-lg"><img src="/resources/icon/jjim.png" />찜&nbsp;</button>
+	            <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#jjimModal1" id="jjim_btn"><img src="/resources/icon/jjim.png" />찜&nbsp;</button>
+	            <%}//비회원일 때
+	          	else {%>
+	            <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#Nouser_cartModal" id="cart_btn_noUser">
+	                &nbsp;&nbsp;&nbsp;<img src="/resources/icon/cart.png" />장바구니 담기 &nbsp;&nbsp;</button>
+	            <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#userModal" id="jjim_btn_noUser"><img src="/resources/icon/jjim.png" />찜&nbsp;</button>
+	            <%} %>
 	        </div>
 	    </div>
 	</div>
@@ -483,7 +628,9 @@
 	<!--content-->
 	<div class="col-md-offset-2 col-md-8 col-sm-12 content_content">
 	    <!--이미지 첨부로 내용이 추가되는 영역-->
-	    <img src="${photoPath }">
+	    <c:forEach items="${imgList}" var="imgList">
+	    	<img src="/resources/imgs/${imgList.photoCtg }/${imgList.photoName}">
+	    </c:forEach>
 	</div>
 	
 	<!--bottom-->
@@ -510,7 +657,7 @@
 	    </div>
 	    <div class="col-md-2 col-sm-3 col-xs-3" onclick="list_tab(4)" id="tab_con4">
 	        <p>
-	            고객후기(${reviewCount })
+	            	고객후기(${reviewCount })
 	        </p>
 	    </div>
 	    <div class="col-md-2 md_divline1">
@@ -553,94 +700,164 @@
 	
 	<!--review-->
 	<div class="col-md-offset-2 col-md-8 col-sm-12 content_review" id="list_val4" class="list_div">
-	    <h4 class="engfont">REVIEW</h4>
-	
+		<h4 class="engfont">REVIEW</h4>
 	    <ul class="col-md-10">
 	        <li>
-	            상품에 대한 문의를 남기는 공간입니다. 해당 게시판의 성격과 다른 글은 사전동의 없이 담당 게시판으로 이동될 수 있습니다.
+	            	상품에 대한 문의를 남기는 공간입니다. 해당 게시판의 성격과 다른 글은 사전동의 없이 담당 게시판으로 이동될 수 있습니다.
 	        </li>
 	        <li>
-	            배송관련, 주문(취소/교환/환불)관련 문의 및 요청사항은 마이페이지 내 1:1 문의에 남겨주세요.
+	            	배송관련, 주문(취소/교환/환불)관련 문의 및 요청사항은 마이페이지 내 1:1 문의에 남겨주세요.
 	        </li>
 	    </ul>
-	    <select class="col-md-2">
-	        <option>최근등록순</option>
-	        <option>좋아요많은순</option>
+	    <select class="col-md-2 reviewalign" onchange="select_event();" value="${reviewalign}">
+	        <option value="reviewnew">최근등록순</option>
+	        <option value="reviewbest">좋아요많은순</option>
 	    </select>
-	    <table class="table custom-table">
-	        <thead>
-	            <tr>
-	                <th>번호</th>
-	                <th>제목</th>
-	                <th>작성자</th>
-	                <th>작성일</th>
-	                <th colspan="2">좋아요</th>
-	                <!-- <th>　</th> -->
-	            </tr>
-	        </thead>
-	        
-	        <c:forEach items="${reviewList}" var="reviewList">
-	        <tbody>
-	            <tr>
-	                <td>${reviewList.reviewNum }</td>
-	                <td class="${reviewList.reviewNum }">제목</td>
-	                <td>${reviewList.userName }</td>
-	                <td>${reviewList.date }</td>
-	                <td>${reviewList.recommend }</td>
-	                <td><a href="#">♡</a></td>
-	            </tr>
-	            <tr class="toggler">
-	                <td colspan='6'>
-	                <c:set var="photoPath" value="${reviewList.photoPath }"/>
-	                <c:if test="${not empty photoPath}">
-	                    <img src="${photoPath }" />
-	                </c:if>
-	                    <p id="${reviewList.reviewNum }" class="tbody_p">
-	                       	 ${reviewList.reviewCon }
-	                    </p>
-	                </td>
-	            </tr>
-	        </tbody>
-	        </c:forEach>	
-	    </table>
-	    
-	    
-	    
-	    <div class="col-md-offset-4 col-md-5 col-sm-offset-4 col-sm-5 col-xs-offset-2 col-xs-8">
-	        <ul class="pagination">
-	        <li><a href="${URI}&p=0" aria-label="Previous">&laquo;</a></li>
-	        
-	        <!-- 현재 페이지가 0보다 작아질 경우 이전 버튼을 disabled하는 조건문 -->
-	        <c:choose>
-	        <c:when test="${p <= 0 }">
-	        <li class="disabled"><a href="#">‹</a></li>
-	        </c:when>
-	        <c:otherwise>
-	        <li><a href="${URI}&p=${p-1} ">‹</a></li>	        
-	        </c:otherwise>
-	        </c:choose>
-	        
-	        <!-- 해당하는 페이지로 갈 수 있는 버튼 -->
-	        <c:forEach var="i" begin="0" end="${totalpage}">
-	        <li><a href="${URI}&p=${i }">${i+1 }</a></li>
-	        </c:forEach>
-	        
-	        <!-- 현재 페이지가 totalpage보다 커질 경우 다음 버튼을 disabled하는 조건문 -->
-	        <c:choose>
-	        <c:when test="${p >= totalpage }">
-	        <li class="disabled"><a href="#">›</a></li>
-	        </c:when>
-	        <c:otherwise>
-	        <li><a href="${URI}&p=${p+1 }">›</a></li>
-	        </c:otherwise>
-	        </c:choose>
-	        
-	        <li><a href="${URI}&p=${totalpage }" aria-label="Next">&raquo;</a></li>
-	    </ul>
+	    <div id="review_div">
+		    <jsp:include page="d_list.jsp"/>
 	    </div>
-	
 	</div>
 	<!--review end-->
+	
+<!-- Modal start -->
+ <!-- cartModal -->
+    <div class="modal fade" id="cartModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">알림메세지</h4>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                    장바구니에 담으시겠습니까?
+                    <br /><br /><br />
+                </div>
+                <div class="modal-footer">
+                    <div class="m_btn_div">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cartModal2" data-dismiss="modal" id="cartok1">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="cartModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">알림메세지</h4>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                    해당상품을 장바구니에 담았습니다.<br />
+                    지금 확인하시겠습니까?
+                    <br /><br /><br />
+                </div>
+                <div class="modal-footer">
+                    <div class="m_btn_div">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="cartok2">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jjimModal -->
+    <div class="modal fade" id="jjimModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">알림메세지</h4>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                    찜에 담으시겠습니까?
+                    <br /><br /><br />
+                </div>
+                <div class="modal-footer">
+                    <div class="m_btn_div">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jjimModal2" data-dismiss="modal" id="jjimok1">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="jjimModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">알림메세지</h4>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                    해당상품을 찜에 담았습니다.<br />
+                    지금 확인하시겠습니까?
+                    <br /><br /><br />
+                </div>
+                <div class="modal-footer">
+                    <div class="m_btn_div">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="jjimok2">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 비회원 모달 -->
+        <div class="modal fade" id="Nouser_cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">알림메세지</h4>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                    장바구니에 담으시겠습니까?
+                    <br /><br /><br />
+                </div>
+                <div class="modal-footer">
+                    <div class="m_btn_div">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cartModal2" data-dismiss="modal" id="noUser_cartok">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">알림메세지</h4>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                   회원전용 서비스 입니다.<br />
+                    로그인/회원가입 페이지로 이동하시겠습니까?
+                    <br /><br /><br />
+                </div>
+                <div class="modal-footer">
+                    <div class="m_btn_div">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="userok">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal end -->
+	
 
 <!-- content end -->
 <jsp:include page="/resources/template/footer.jsp"/>

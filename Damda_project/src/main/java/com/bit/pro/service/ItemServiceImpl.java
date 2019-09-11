@@ -1,16 +1,22 @@
 package com.bit.pro.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.bit.pro.dao.ItemDao;
+import com.bit.pro.dao.ReviewDao;
 import com.bit.pro.vo.AllItemVo;
+import com.bit.pro.vo.ReviewVo;
 
 @Service("itemService")
 public class ItemServiceImpl implements ItemService {
@@ -19,65 +25,101 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Resource(name="itemDao")
 	private ItemDao itemDao;
-
-
+	
+	@Resource(name="reviewDao")
+	private ReviewDao reviewDao;
+	
 	//Home
 	@Override
-	public List<AllItemVo> selectHome(HashMap<String, Object> map) throws Exception {
-//		logger.debug("출력: "+itemDao.selectHome(map));
-		return itemDao.selectHome(map);
+	public Model selectHome(Model model) throws Exception {
+		AllItemVo bean = new AllItemVo();
+		List<AllItemVo> list = new ArrayList<AllItemVo>();
+		//1=salad, 2=dessert, 3=drink
+		for(int i=1; i<=3; i++) {
+			
+			bean.setCategory(i);
+			list = itemDao.selectHome(bean);
+			model.addAttribute("List"+i, list);
+		}
+		
+		return model;
 	}
 	
 	//Main
 	@Override
-	public List<AllItemVo> selectItem(HashMap<String, Object> map) throws Exception {
-		logger.debug("출력: "+itemDao.selectHome(map));
-		return itemDao.selectItem(map);
-	}
-
-	@Override
-	public int totalCount(HashMap<String, Object> map) {
-		return itemDao.totalItem(map);
+	public Model selectItem(int num, int p, String select, Model model) throws Exception {
+		AllItemVo bean = new AllItemVo();
+		int row =30;
+		bean.setCategory(num);
+		bean.setP(p);
+		int totalList = itemDao.totalItem(bean);
+		int totalpage = totalList / row - 1;
+	    if((totalList % row) > 0) {
+	    	totalpage++;
+	    }
+	    
+	    int startpoint = p * row;
+	    bean.setStartpoint(startpoint);
+	    bean.setRow(row);
+	    String descString = "";
+		if(select.equals("new")) {
+			descString ="itemnum desc";
+		}else if(select.equals("best")) {
+			descString="itemsales desc";
+		}else if(select.equals("cheap")) {
+			descString="itemprice asc";
+		}else if(select.equals("expen")) {
+			descString="itemprice desc";
+		}
+		bean.setItemalign(descString);
+           
+		List<AllItemVo> list = itemDao.selectItem(bean);
+		
+		if(list.size() == 0) {
+			totalpage = 1;
+		}
+		
+		model.addAttribute("p", p);
+		model.addAttribute("totalpage",totalpage);
+		model.addAttribute("List", list);
+		model.addAttribute("itemalign", select);
+		
+		return model;
 	}
 	
 	//best
 	@Override
-	public List<AllItemVo> selectBest(HashMap<String, Object> map) throws Exception {
-		return itemDao.selectBest(map);
+	public Model selectBest(int startPoint, int row, Model model) throws Exception {
+		AllItemVo bean = new AllItemVo();
+		bean.setStartpoint(startPoint);
+		bean.setRow(row);
+		
+		List<AllItemVo> list = itemDao.selectBest(bean);
+		model.addAttribute("List", list);
+		return model;
 	}	
 
 	//detail
 	@Override
-	public AllItemVo selectOne(HashMap<String, Object> map) throws Exception {
-		return itemDao.selectOne(map);
+	public Model selectOne(int no, Model model) throws Exception {
+		AllItemVo bean = new AllItemVo();
+		bean.setItemNum(no);
+		//아이템 정보
+		AllItemVo list = itemDao.selectOne(bean);
+		model.addAttribute("List", list);
+		return model;
 	}
 
 	@Override
-	public String selectOne_detailImg(HashMap<String, Object> map) throws Exception {
-		return itemDao.selectOne_detailImg(map);
+	public Model selectOne_detailImg(int no, Model model) throws Exception {
+		AllItemVo bean = new AllItemVo();
+		bean.setItemNum(no);
+		//디테일 이미지
+		List<AllItemVo> imglist = itemDao.selectOne_detailImg(bean);
+		model.addAttribute("imgList", imglist);
+		return model;
 	}
 
-	
-	//align
-	@Override
-	public List<AllItemVo> alignNew(HashMap<String, Object> map) throws Exception {
-		return itemDao.alignNew(map);
-	}
-
-	@Override
-	public List<AllItemVo> alignBest(HashMap<String, Object> map) throws Exception {
-		return itemDao.alignBest(map);
-	}
-
-	@Override
-	public List<AllItemVo> alignCheap(HashMap<String, Object> map) throws Exception {
-		return itemDao.alignCheap(map);
-	}
-
-	@Override
-	public List<AllItemVo> alignExpen(HashMap<String, Object> map) throws Exception {
-		return itemDao.alignExpen(map);
-	}
 
 
 }

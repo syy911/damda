@@ -6,9 +6,11 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import com.bit.pro.util.pagination;
 import com.bit.pro.vo.MateVo;
+import com.bit.pro.vo.PhotoVo;
 
 @Repository("mateDao")
 public class MateDaoImpl implements MateDao{
@@ -24,14 +26,14 @@ public class MateDaoImpl implements MateDao{
 	}
 
 	@Override
-	public void insertMate(MateVo mateVo) {
-		sqlMate.insert(NAMESPACE+".insertMate",mateVo);		
+	public int insertMate(MateVo mateVo) {
+		return sqlMate.insert(NAMESPACE+".insertMate",mateVo);			
 	}
 
 	@Override
-	public MateVo selectMateOne(int matenum) {
+	public List<MateVo> selectMateOne(int matenum) {
 		System.out.println("matenum>>>>>>>>>>>>>>"+matenum);
-		return sqlMate.selectOne(NAMESPACE+".selectMateOne",matenum);
+		return sqlMate.selectList(NAMESPACE+".selectMateOne",matenum);
 	}
 
 	@Override
@@ -49,6 +51,5 @@ public class MateDaoImpl implements MateDao{
 		return sqlMate.selectOne(NAMESPACE+".selectMateAllCnt");
 	}
 
-	
 	
 }

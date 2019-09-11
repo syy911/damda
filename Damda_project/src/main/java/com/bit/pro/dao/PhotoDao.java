@@ -5,4 +5,8 @@ import com.bit.pro.vo.PhotoVo;
 public interface PhotoDao {
 	
 	int insertPhoto(PhotoVo photoVo)throws Exception;
+	
+	int insertMatePhoto(PhotoVo photoVo)throws Exception;
+	
+	
 }

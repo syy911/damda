@@ -6,6 +6,7 @@ import com.bit.pro.vo.QnaVo;
 
 public interface QnaDao {
 	
-	List<QnaVo> selectQna() throws Exception;
+	List<QnaVo> selectQnaList() throws Exception;
 	int insertQna(QnaVo qnaVo) throws Exception;
+
 }

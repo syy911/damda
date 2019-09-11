@@ -100,12 +100,8 @@
                	<li><a href="#">관리자페이지</a></li>
                	<%}else if(user_ctg == 0){ %>
                 <li><a href="#">마스터페이지</a></li>
-                <%}
-                if(session.getAttribute("userid")!=null){%>
+                <%}%>
                 <li><a href="/mypage/cart">장바구니<img src="/resources/icon/cart.png" class="carticon"></a></li>
-				<%}else{%>
-                <li><a href="/login/">장바구니<img src="/resources/icon/cart.png" class="carticon"></a></li>
-                <%} %>
             </ul>
         </div>
     </div>

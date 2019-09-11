@@ -44,6 +44,7 @@
         #content table .price_td p {
             position: relative;
         }
+        
 
         #content table .price_td p {
             font-size: 15px;
@@ -175,6 +176,21 @@
             text-align: center;
             position: relative;
         }
+        
+        #content table .edit{
+            width: 60px;
+            display: block;
+            position: relative;
+            top: 42px;
+            left: 8px;  
+            border: 0px;
+            color: white;
+            background-color: #f1d0bd;
+        }
+
+        #content table .edit:hover{
+            background-color: darksalmon;  
+        }
 
         /*수량버튼_end*/
         #content .btn_div {
@@ -244,6 +260,7 @@
                 $('.btn').addClass('btn-lg');
                 $('.info_td strong, .price_td p, .total_price').css('font-size', '15px');
                 $('.info_td p').css('font-size', '13px');
+                $('.edit').css('top','42px');
             } else {
                 $('.btn').removeClass('btn-lg');
 
@@ -257,6 +274,7 @@
                 $('.info_td strong, .price_td p, .total_price').css('font-size', '14px');
                 $('.info_td p').css('font-size', '12px');
                 $('.btn_div').css('margin-bottom', '70px');
+                $('.edit').css('top','37px');
             } else {
                 $('.btn_div').css('margin-bottom', '150px');
 
@@ -271,6 +289,7 @@
                 $('.info_td strong, .price_td p, .total_price').css('font-size', '13px');
                 $('.info_td p').css('font-size', '11px');
                 $('.btn_div').css('margin-bottom', '50px');
+                $('.edit').css('top','12px');
             } else {
                 $('.btn').removeClass('btn-sm');
                 $('.btn_div').css('margin-bottom', '150px');
@@ -313,9 +332,7 @@
         //수량추가
         function minus_click(num) {
             var num = num;
-            var minus_msg = '#minus' + num;
-            var minus = $(minus_msg);
-            var ea_msg = '#ea' + num;
+            var ea_msg = '#ea_' + num;
             var ea = Number($(ea_msg).val());
 
             if (ea > 1) {
@@ -328,7 +345,7 @@
 
         function plus_click(num) {
             var num = num;
-            var ea_msg = '#ea' + num;
+            var ea_msg = '#ea_' + num;
             var ea = Number($(ea_msg).val());
 
             $(ea_msg).val(++ea);
@@ -337,12 +354,45 @@
             price_setting();
         }
 
+        //수량 DB update allitem
+        function edit_click(num){
+        	var num = num;
+            var ea_msg = '#ea_' + num;
+            var ea = Number($(ea_msg).val());
+
+            $.ajax({
+    			url:"/mypage/cart?ea="+ea+"&itemnum="+num,
+    			type:'post',
+    			data:"",
+    			success: function(data){
+    	        	console.log('success');
+    	        	//$('#review_div').load('/item/review?no='+no+'&align='+select_val); 
+    	        }
+    		});
+
+            total_price(ea, num);
+
+            price_setting();
+        }
+
+      	//수량 DB update custom
+        function edit_click2(num){
+        	var num = num;
+            var ea_msg = '#ea_' + num;
+            var ea = Number($(ea_msg).val());
+
+
+            total_price(ea, num);
+
+            price_setting();
+        }
+        
         //가격
         function total_price(ea, num) {
             var num = num;
 
             //input의 val값구하기
-            var origin_input_msg = '#origin_itemno' + num;
+            var origin_input_msg = '#origin_itemno_' + num;
             var price = $(origin_input_msg).val();
 
             //가격*수량의 문자열
@@ -355,13 +405,13 @@
             var price_view = price_viewer(totalPrice, length);
 
             //class는 p영역
-            var p_msg = '.itemno' + num;
+            var p_msg = '.itemno_' + num;
             $(p_msg).html(price_view);
             console.log(price_view);
 
             //합계금액 넘길 input
             var inputPrice = price * ea;
-            var total_input_msg = '#total_itemno' + num;
+            var total_input_msg = '#total_itemno_' + num;
             $(total_input_msg).val(inputPrice);
             console.log(inputPrice);
         }
@@ -406,7 +456,11 @@
         }
 
         function price_setting() {
-            var length = $('tbody tr').length;
+            var length = $('.item_tbody tr').length+1;
+            console.log('item_tbody length: ' + length);
+            var length2 = $('.custom_tbody tr').length;
+            console.log('custom_tbody length: ' + length2);
+
 
             //길이제한이 없는 배열생성
             var price_arr = [];
@@ -418,14 +472,47 @@
             var s_total = 0;
 
             for (var i = 1; i < length; i++) {
-                var ea_msg = '#ea' + i;
+                var itemPirce = '.itemPirce_' + i;
+                console.log('itemPirce : ' + itemPirce);
+                var originPrice = $(itemPirce).attr('id');
+                console.log('originPrice : ' + originPrice);
+                var itemNum = originPrice.split('_');
+                console.log('itemNum : ' + itemNum[2]);
+
+                var ea_msg = '#ea_' + itemNum[2];
                 var ea = $(ea_msg).val();
+                console.log('ea : ' + ea);
                 //가격세팅
-                total_price(ea, i);
+                total_price(ea, itemNum[2]);
 
                 //hidden input 합계 가격
-                var total_msg = '#total_itemno' + i;
+                var total_msg = '#total_itemno_' + itemNum[2];
                 var price = $(total_msg).val();
+                console.log('price : ' + price);
+                price_arr[i] = Number(price);
+
+                //합계가격
+                s_price += price_arr[i];
+            }
+
+            for (var i = 1; i < length2; i++) {
+                var itemPirce = '.customPirce_' + i;
+                console.log('itemPirce : ' + itemPirce);
+                var originPrice = $(itemPirce).attr('id');
+                console.log('originPrice : ' + originPrice);
+                var itemNum = originPrice.split('_');
+                console.log('itemNum : ' + itemNum[2]);
+
+                var ea_msg = '#ea_' + itemNum[2];
+                var ea = $(ea_msg).val();
+                console.log('ea : ' + ea);
+                //가격세팅
+                total_price(ea, itemNum[2]);
+
+                //hidden input 합계 가격
+                var total_msg = '#total_itemno_' + itemNum[2];
+                var price = $(total_msg).val();
+                console.log('price : ' + price);
                 price_arr[i] = Number(price);
 
                 //합계가격
@@ -481,151 +568,80 @@
 		                <th></th>
 		            </tr>
 		        </thead>
-		        <tbody>
+		        <tbody class="item_tbody">
+		        <c:forEach items="${List}" var="List" varStatus="status">
 		            <tr>
 		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum" />
-		                    <label for="itemnum"></label>
+		                    <input type="checkbox" name="chk" id="${List.itemNum }" />
+		                    <label for="${List.itemNum }"></label>
 		                </td>
 		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s01.jpg" class="cartimg" />
+		                    <img alt="cartimg" src="/resources/imgs/${List.photoCtg}/${List.photoName}" class="cartimg" />
 		                </td>
 		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
+		                    <strong>${List.itemName }</strong>
+		                    <p>선택정보 : 수량 ${List.ea } 개</p>
 		                </td>
 		                <td class="ea_td">
 		                    <div>
-		                        <button class="minus" id="minus1" onclick="minus_click(1);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea1" value="1" readonly />
-		                        <button class="plus" id="plus1" onclick="plus_click(1);">+</button>
+		                        <button class="minus" onclick="minus_click(${List.itemNum });">-</button>
+		                        <input type="text" class="ea" name="ea" id="ea_${List.itemNum }" value="${List.ea }" readonly />
+		                        <button class="plus" onclick="plus_click(${List.itemNum });">+</button>
+		                    </div>
+		                    <div>
+		                    	<button class="edit" onclick="edit_click(${List.itemNum })">수정</button>
 		                    </div>
 		                </td>
 		                <td class="price_td">
-		                    <p class="itemno1">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno1" value="6000" />
-		                    <input type="hidden" name="total_price" id="total_itemno1" value="6000" />
+		                    <p class="itemno_${List.itemNum }">상품가격오는 곳******************</p>
+		                    <input type="hidden" name="origin_price" class="itemPirce_${status.count }" id="origin_itemno_${List.itemNum }" value="${List.itemPrice }" />
+		                    <input type="hidden" name="total_price" id="total_itemno_${List.itemNum }" value="6000" />
 		                </td>
 		                <td class="delete_td">
 		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
 		                </td>
 		            </tr>
+		        </c:forEach>
+		        </tbody>
+		        <tbody class="custom_tbody">
+		        <c:forEach items="${List2}" var="List2" varStatus="status">
 		            <tr>
 		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum2" />
-		                    <label for="itemnum2"></label>
+		                    <input type="checkbox" name="chk" id="${List2.cstmtNum }" />
+		                    <label for="${List2.cstmtNum }"></label>
 		                </td>
 		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s02.jpg" class="cartimg" />
+		                    <img alt="cartimg" src="/resources/imgs/${List2.photoCtg}/${List2.photoName}" class="cartimg" />
 		                </td>
 		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
+		                    <strong>커스텀 샐러트 no.${List2.cstmtNum } </strong>
+		                    <p>선택정보 : 수량 ${List2.ea } 개/<br/>
+							       선택사항 : 		                    
+		                    </p>
 		                </td>
 		                <td class="ea_td">
 		                    <div>
-		                        <button class="minus" id="minus2" onclick="minus_click(2);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea2" value="1" readonly />
-		                        <button class="plus" id="plus2" onclick="plus_click(2);">+</button>
+		                        <button class="minus" onclick="minus_click(${List2.cstmtNum });">-</button>
+		                        <input type="text" class="ea" name="ea" id="ea_${List2.cstmtNum }" value="${List2.ea }" readonly />
+		                        <button class="plus" onclick="plus_click(${List2.cstmtNum });">+</button>
+		                    </div>
+		                    <div>
+		                    	<button class="edit" onclick="edit_click2(${List2.cstmtNum })">수정</button>
 		                    </div>
 		                </td>
 		                <td class="price_td">
-		                    <p class="itemno2">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno2" value="7000" />
-		                    <input type="hidden" name="total_price" id="total_itemno2" value="7000" />
+		                    <p class="itemno_${List2.cstmtNum }">상품가격오는 곳******************</p>
+		                    <input type="hidden" name="origin_price" class="customPirce_${status.count }" id="origin_itemno_${List2.cstmtNum }" value="${List2.cstmPrice }" />
+		                    <input type="hidden" name="total_price" id="total_itemno_${List2.cstmtNum }" value="6000" />
 		                </td>
 		                <td class="delete_td">
 		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
 		                </td>
 		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum3" />
-		                    <label for="itemnum3"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s03.jpg" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus3" onclick="minus_click(3);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea3" value="1" readonly />
-		                        <button class="plus" id="plus3" onclick="plus_click(3);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno3">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno3" value="8000" />
-		                    <input type="hidden" name="total_price" id="total_itemno3" value="8000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum4" />
-		                    <label for="itemnum4"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s04.PNG" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus4" onclick="minus_click(4);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea4" value="1" readonly />
-		                        <button class="plus" id="plus4" onclick="plus_click(4);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno4">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno4" value="9000" />
-		                    <input type="hidden" name="total_price" id="total_itemno4" value="9000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td class="checkbox_td">
-		                    <input type="checkbox" name="chk" id="itemnum5" />
-		                    <label for="itemnum5"></label>
-		                </td>
-		                <td class="img_td">
-		                    <img alt="cartimg" src="/resources/imgs/s01.jpg" class="cartimg" />
-		                </td>
-		                <td class="info_td">
-		                    <strong>상품이름</strong>
-		                    <p>상품 옵션/선택정보</p>
-		                </td>
-		                <td class="ea_td">
-		                    <div>
-		                        <button class="minus" id="minus5" onclick="minus_click(5);">-</button>
-		                        <input type="text" class="ea" name="ea" id="ea5" value="1" readonly />
-		                        <button class="plus" id="plus5" onclick="plus_click(5);">+</button>
-		                    </div>
-		                </td>
-		                <td class="price_td">
-		                    <p class="itemno5">상품가격오는 곳******************</p>
-		                    <input type="hidden" name="origin_price" id="origin_itemno5" value="10000" />
-		                    <input type="hidden" name="total_price" id="total_itemno5" value="10000" />
-		                </td>
-		                <td class="delete_td">
-		                    <img alt="deleteimg" src="/resources/icon/x.png" class="delete_img" />
-		                </td>
-		            </tr>
-		
+		        </c:forEach>
 		            <tr>
 		                <td class="total_price" colspan="6">
-		                    상품구매금액 <strong class="price_strong">207,000원 </strong>+ 배송비 <strong class="delivery_strong">0원 </strong>= 합계 : <strong class="total_strong">207,000원</strong>
+		                    	상품구매금액 <strong class="price_strong">207,000원 </strong>+ 배송비 <strong class="delivery_strong">0원 </strong>= 합계 : <strong class="total_strong">207,000원</strong>
 		                </td>
 		            </tr>
 		        </tbody>

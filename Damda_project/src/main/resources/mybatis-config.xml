@@ -12,6 +12,7 @@
             <typeAlias type="com.bit.pro.vo.EventVo" alias="eventVo"/>
             <typeAlias type="com.bit.pro.vo.MateVo" alias="mateVo"/>
             <typeAlias type="com.bit.pro.vo.PhotoVo" alias="photoVo"/>
+            <typeAlias type="com.bit.pro.vo.CartVo" alias="cartVo"/>
         </typeAliases>
     </configuration>
 

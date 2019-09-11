@@ -31,16 +31,16 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img src="/resources/icon/allctg.png" class="allctgicon" />전체 카테고리<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img src="/resources/icon/allctg.png" class="allctgicon" />전체 카테고리<span class="caret"></span></a>
                             <ul class="dropdown-menu allctg_right" role="menu">
-                                <li class="li1"><a href="/item/salad"><img src="/resources/icon/salad.png" />샐러드<img src="/resources/icon/right.png" class="rightimg img1" /></a></li>
+                                <li class="li1"><a href="/item/list?item=salad"><img src="/resources/icon/salad.png" />샐러드<img src="/resources/icon/right.png" class="rightimg img1" /></a></li>
                                 <li class="divider"></li>
-                                <li class="li2"><a href="/item/dessert"><img src="/resources/icon/dessert.png" class="dessertimg" />디저트<img src="/resources/icon/right.png" class="rightimg img2" /></a></li>
+                                <li class="li2"><a href="/item/list?item=dessert"><img src="/resources/icon/dessert.png" class="dessertimg" />디저트<img src="/resources/icon/right.png" class="rightimg img2" /></a></li>
                                 <li class="divider"></li>
-                                <li class="li3"><a href="/item/drink"><img src="/resources/icon/drink.png" />음료<img src="/resources/icon/right.png" class="rightimg right img3" /></a></li>
+                                <li class="li3"><a href="/item/list?item=drink"><img src="/resources/icon/drink.png" />음료<img src="/resources/icon/right.png" class="rightimg right img3" /></a></li>
                             </ul>
                         </li>
-                        <li><a href="/item/best">베스트</a></li>
+                        <li><a href="/item/list?item=best">베스트</a></li>
                         <li><a href="/custom/">커스텀</a></li>
                         <li><a href="/event/">이벤트</a></li>
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">고객센터<span class="caret"></span></a>
@@ -121,12 +121,8 @@
                                 <li><a href="#">관리자등록</a></li>
                             </ul>
                         </li>
-                        <%} 
-                        if(session.getAttribute("userid")!=null){%>
-                        <li><a href="/mypage/cart">장바구니<img src="/resources/icon/cart.png" class="carticon"></a></li>
-						<%}else{%>
-                        <li><a href="/login/">장바구니<img src="/resources/icon/cart.png" class="carticon"></a></li>
                         <%} %>
+                        <li><a href="/mypage/cart">장바구니<img src="/resources/icon/cart.png" class="carticon"></a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

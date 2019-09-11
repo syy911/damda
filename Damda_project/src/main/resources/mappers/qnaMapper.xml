@@ -4,12 +4,35 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.bit.pro.mappers.qnaMapper">
- 
- <select id="selectQna" resultType="qnaVo">
- 	SELECT * FROM MAIN_QNA ORDER BY QNANUM DESC;
+  <select id="selectQnaList" resultType="qnaVo">
+	SELECT @RNUM :=@RNUM +1 AS ROWNUM,COUNT(*) AS totalCount, q.*
+	FROM
+	(
+	SELECT * FROM main_qna 
+	) q,
+	(SELECT @RNUM:=0) TMP ORDER BY q.qnanum DESC, ROWNUM DESC LIMIT 10
  </select>
+ 
+ 
+ 
+ 
+<!-- <sql id="COMMON_PAGING_HEADER"> -->
+<!--    SELECT @RNUM :=@RNUM +1 AS ROWNUM, q.* -->
+<!--    FROM  -->
+<!--    (     -->
+<!-- </sql> -->
+
+<!-- <sql id="COMMON_PAGING_TAIL"> -->
+<!--    ) q, -->
+<!--    (SELECT @RNUM:=0) TMP ORDER BY #{primaryKey, jdbcType=INTEGER} DESC -->
+<!--    , ROWNUM DESC LIMIT 10 OFFSET #{last, jdbcType=INTEGER} -->
+<!-- </sql> -->
+
+<!-- <select id="selectQnaList" resultType="qnaVo"> -->
+<!--    <include refid="COMMON_PAGING_HEADER"/> -->
+<!--         SELECT * FROM main_qna  -->
+<!--    <include refid="COMMON_PAGING_TAIL"/> -->
+<!-- </select> -->
  
     
 </mapper>
-
-
